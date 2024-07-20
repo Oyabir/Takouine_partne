@@ -1,0 +1,80 @@
+{% extends "takouine/mainDashbordEdituer.html" %}
+{% load static %}
+
+{% block content %}
+<div class="app-wrapper">
+	<div class="app-content pt-3 p-md-3 p-lg-4">
+		<div class="container-xl">  
+			<div class="row g-3 mb-4 align-items-center justify-content-between">
+				<div class="col-auto">
+					<h1 class="app-page-title mb-0">Formations</h1>
+				</div>
+				<div class="col-auto">
+					 <div class="page-utilities">
+						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+							<div class="col-auto">						    
+								<a class="btn app-btn-secondary" href="{% url 'add_formationAdmin' %}">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+									</svg>									  
+									Add Formation
+								</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		   
+			{% comment %} <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+				<a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
+				<a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Paid</a>
+				<a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Pending</a>
+				<a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Cancelled</a>
+			</nav> {% endcomment %}
+			
+			<div class="tab-content" id="orders-table-tab-content">
+				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+					<div class="app-card app-card-orders-table shadow-sm mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+								<table class="table app-table-hover mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">N°</th>
+											<th class="cell">Name Formation</th>
+											<th class="cell">Date Created</th>
+											<th class="cell">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for formation in formations %}
+										<tr>
+											<td class="cell">{{ forloop.counter }}</td>
+											<td class="cell"><span class="truncate">{{ formation.name }}</span></td>
+											<td class="cell"><span class="badge bg-success">{{ formation.date_created }}</span></td>
+											<td class="cell">
+												<a href="{% url 'update_formation' formation.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+												<a class="text-danger" href="{% url 'delete_formation' formation.id %}"><i class="fa-solid fa-trash"></i></a>                                
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						   
+						</div>	
+					</div>
+					
+				</div>
+			</div>
+			
+		
+		</div>
+	</div>
+
+</div>  					
+  
+
+
+  
+{% endblock  %}

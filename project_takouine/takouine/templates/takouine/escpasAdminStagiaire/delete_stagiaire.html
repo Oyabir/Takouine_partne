@@ -1,0 +1,55 @@
+
+<div class="container pb-5">
+    <h1>Delete Stagiaire</h1>
+    <p>Are you sure you want to delete <strong>{{ stagiaire.user.username }}</strong>?</p>
+    <form method="POST">
+        {% csrf_token %}
+    <a href="{% url 'escpasAdminStagiaire' %}">Return</a>
+    <button type="submit" >OK</button>
+    </form>
+</div>
+
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f2f2f2;
+      }
+      
+      h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      
+      form {
+        margin-top: 20px;
+      }
+      
+      a {
+        display: inline-block;
+        margin-right: 10px;
+        color: #333;
+        text-decoration: none;
+      }
+      
+      button {
+        background-color: #337ab7;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      
+      button:hover {
+        background-color: #286090;
+      }
+      
+      button:focus {
+        outline: none;
+      }
+      
+</style>
+

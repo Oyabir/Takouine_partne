@@ -1,0 +1,94 @@
+{% extends "takouine/home.html" %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: -56px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-top: 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br><br>
+    <div class="container">
+        <h2>Show Data of Stagiaire</h2>
+        <br>
+        <div>
+            <label >Username:</label>
+            <h3>{{ stagiaire.name }}</h3>
+
+            <label >Formation:</label>
+            <h3>{% for formation in stagiaire.formations.all %}
+                {{ formation.name }}
+                {% if not forloop.last %}, {% endif %}
+              {% endfor %}</h3>
+
+            <label >Date Fin:</label>
+            <h3>{{ stagiaire.date_fin }}</h3>
+
+            <label >Image:</label>
+            <h3><img src="{{ stagiaire.avatar.url }}" style="width: 153px; height: 153px;"></h3>
+
+            <a href="{% url 'escpasPartenaireStagiaire' %}"><button type="submit">Reture</button></a>
+        </div>
+        
+        {% if form.errors %}
+        <div class="error-message">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+{% endblock  %}

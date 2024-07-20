@@ -1,0 +1,101 @@
+{% extends "takouine/home.html" %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-top: 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Partenaire</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- User form fields -->
+            <label for="id_username">Username:</label>
+            {{ user_form.username }}
+            <!-- partenaire form fields -->
+            <label for="id_email">Email:</label>
+            {{ partenaire_form.Companyemail }}
+            <label for="id_CompanyName">CompanyName:</label>
+            {{ partenaire_form.CompanyName }}
+            <label for="id_CompanyPhone">CompanyPhone:</label>
+            {{ partenaire_form.CompanyPhone }}
+            <label for="id_CompanyPhone">Category:</label>
+            {% comment %} {{ partenaire_form.category}}   {% endcomment %}
+            <select class="form-select w-auto" name="category">
+                {% for category_key, category_value in partenaire_form.fields.category.choices %}
+                    {% if category_key == partenaire_form.initial.category %}
+                        <option value="{{ category_key }}" selected>{{ category_value }}</option>
+                    {% else %}
+                        <option value="{{ category_key }}">{{ category_value }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+            <br>
+            <button type="submit">Update</button>
+        </form>
+        
+        {% if form.errors %}
+        <div class="error-message">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+{% endblock  %}

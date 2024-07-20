@@ -1,0 +1,126 @@
+{% extends "takouine/home.html" %}
+{% load static %}
+
+{% block content %}
+<br><br><br><br>
+<div class="container" style="width: 969px;">
+  <div class="left">
+    <div class="header">
+      <h2 class="animation a1">Add Edituer Here</h2>
+    </div>
+    <form action="" method="POST" class="form">
+      {% csrf_token %}
+      <div class="form-field">
+        <label for="id_username">Username:</label>
+        {{ form.username }}
+      </div>
+      <div class="form-field">
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+      </div>
+      <div class="form-field">
+        <label for="id_password1">Password:</label>
+        {{ form.password1 }}
+      </div>
+      <div class="form-field">
+        <label for="id_password2">Confirm Password:</label>
+        {{ form.password2 }}
+      </div>
+      <div class="form-field">
+        <label for="id_name">Full Name:</label>
+        {{ form.name }}
+      </div>
+      <div class="form-field">
+        <label for="id_phone">Phone:</label>
+        {{ form.phone }}
+      </div>
+      <div class="form-field">
+        <label for="id_age">Age:</label>
+        {{ form.age }}
+      </div>
+      {% comment %} <button class="btn btn-primary" type="submit">Add Edituer</button> {% endcomment %}
+      <button type="submit" class="btn btn-dark">Add Edituer</button>
+
+    </form>
+  </div>
+  
+  <div class="right"></div>
+
+ 
+</div>
+  {% if form.errors %}
+  <div class="error-message">
+      <ul>
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <li>{{ error }}</li>
+              {% endfor %}
+          {% endfor %}
+      </ul>
+  </div>
+  {% endif %}
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+  }
+
+  .left {
+    width: 50%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .header h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .form {
+    margin-top: 20px;
+  }
+
+  .form-field {
+    margin-bottom: 15px;
+  }
+
+  .form-field label {
+    display: block;
+    font-weight: bold;
+  }
+
+  .form-field input, .form-field select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .form-field button {
+    padding: 10px 20px;
+    border: 0;
+    background-color: #ffd333;
+    border-radius: 3px;
+    margin-top: 10px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-family: 'Rubik', sans-serif;
+    cursor: pointer;
+  }
+
+  .form-field button:hover {
+    background-color: #45a049;
+  }
+
+  .right {
+    width: 50%;
+    height: 123vh;
+    background-image: url("{% static 'img/img101.jpg' %}");
+    background-size: cover;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ALL Partenaires </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-header {
+            background-color: #f2f2f2;
+        }
+
+        .table-header .header__item {
+            padding: 10px 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .table-row {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-data {
+            padding: 10px 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ALL Partenaires </h2>
+        <table class="table">
+            <thead class="table-header">
+                <tr>
+                    <th class="header__item">Company Name</th>
+                    <th class="header__item">Email</th>
+                    <th class="header__item">Company Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for partenaire in partenaires %}
+                <tr class="table-row">
+                    <td class="table-data">{{ partenaire.CompanyName }}</td>
+                    <td class="table-data">{{ partenaire.Companyemail }}</td>
+                    <td class="table-data">{{ partenaire.CompanyCode }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

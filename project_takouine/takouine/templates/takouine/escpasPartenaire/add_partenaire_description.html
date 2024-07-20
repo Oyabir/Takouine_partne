@@ -1,0 +1,380 @@
+{% extends "takouine/mainDashbordPartenaireAccount.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<body class="app">   
+    <div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    
+			    <h1 class="app-page-title">My Account</h1>
+                <div class="row gy-4">
+	                <div class="col-12 col-lg-6">
+		                <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+						    <div class="app-card-header p-3 border-bottom-0">
+						        <div class="row align-items-center gx-3">
+							        <div class="col-auto">
+								        <div class="app-icon-holder">
+										    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+</svg>
+									    </div><!--//icon-holder-->
+						                
+							        </div><!--//col-->
+							        <div class="col-auto">
+								        <h4 class="app-card-title">Profile</h4>
+							        </div><!--//col-->
+						        </div><!--//row-->
+						    </div><!--//app-card-header-->
+						    <div class="app-card-body px-4 w-100">
+							    <div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label mb-2"><strong>logo</strong></div>
+											{% if partenaire.logo %}
+										    <div class="item-data"><img class="profile-image" src="{{ partenaire.logo.url }}" alt=""></div>
+											{% endif %}
+									    </div>
+								    </div>
+							    </div>
+							    <div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>CompanyName</strong></div>
+									        <div class="item-data">{{partenaire.CompanyName}}</div>
+									    </div>
+									    
+								    </div>
+							    </div>
+							    <div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>description</strong></div>
+									        <div class="item-data" >{{partenaire.description}}</div>
+									    </div>
+									    
+								    </div>
+							    </div>
+							    <div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>Address</strong></div>
+									        <div class="item-data" >
+										        {{partenaire.address}}
+									        </div>
+									    </div>
+								    </div>
+							    </div>
+								<div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>Category</strong></div>
+									        <div class="item-data">
+										       {{partenaire.category}}
+									        </div>
+									    </div>
+								    </div>
+							    </div>
+							    <div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>phone</strong></div>
+									        <div class="item-data">
+										       {{partenaire.CompanyPhone}}
+									        </div>
+									    </div>
+									   
+								    </div>
+							    </div>
+								<div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>Mail</strong></div>
+									        <div class="item-data">
+										       {{partenaire.Companyemail}}
+									        </div>
+									    </div>
+									   
+								    </div>
+							    </div>
+								<div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>Image</strong></div>
+											<div class="item-data">
+												{% if partenaire.photo1 %}
+													<img src="{{ partenaire.photo1.url }}" alt="">
+												{% endif %}
+												{% if partenaire.photo2 %}
+													<img src="{{ partenaire.photo2.url }}" alt="">
+												{% endif %}
+												{% if partenaire.photo3 %}
+													<img src="{{ partenaire.photo3.url }}" alt="">
+												{% endif %}
+												{% if partenaire.photo4 %}
+													<img src="{{ partenaire.photo4.url }}" alt="">
+												{% endif %}
+												{% if partenaire.photo5 %}
+													<img src="{{ partenaire.photo5.url }}" alt="">
+												{% endif %}
+											</div>
+																			
+									    </div>
+										<style>
+											.item-data img {
+												max-width: 100px; /* Adjust the maximum width */
+												max-height: 100px; /* Adjust the maximum height */
+												margin: 5px; /* Add some margin between the images */
+											}
+										</style>
+									   
+								    </div>
+							    </div>
+						    </div>
+						    <div class="app-card-footer p-4 mt-auto">
+							   
+						    </div>
+						   
+						</div>
+	                </div>
+	                <div class="col-12 col-lg-6">
+		                <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+						    <div class="app-card-header p-3 border-bottom-0">
+						        <div class="row align-items-center gx-3">
+							        <div class="col-auto">
+								        <div class="app-icon-holder">
+										    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
+</svg>
+									    </div>
+						                
+							        </div>
+							        <div class="col-auto">
+								        <h4 class="app-card-title">Update Profile</h4>
+							        </div>
+						        </div>
+						    </div>
+						    <div class="app-card-body px-4 w-100">
+							    
+							    <div class="item border-bottom py-3">
+									<form method="post" enctype="multipart/form-data">
+										{% csrf_token %}
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+											<div class="item-label"><strong>CompanyName</strong></div>
+											<div class="item-data">{{form.CompanyName}}</div>
+									    </div>
+								    </div><br>
+									<div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+											<div class="item-label"><strong>CompanyPhone</strong></div>
+											<div class="item-data">{{form.CompanyPhone}}</div>
+									    </div>
+								    </div><br>
+									<div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+											<div class="item-label"><strong>Mail</strong></div>
+											<div class="item-data">{{form.Companyemail}}</div>
+									    </div>
+								    </div><br>
+									<div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+											<div class="item-label"><strong>Description</strong></div>
+											<div class="item-data">{{form.description}}</div>
+									    </div>
+								    </div>
+									<br>
+									<div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+											<div class="item-label"><strong>Address</strong></div>
+											<div class="item-data">{{form.address}}</div>
+									    </div>
+								    </div>
+							    </div>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-auto">
+										<div class="item-label"><strong>logo</strong></div>
+										{% if partenaire.logo %}
+										<div class="item-data"><img src="{{partenaire.logo.url}}" alt=""></div>
+										{% endif %}
+										<div class="item-data">{{form.logo}}</div>
+									</div>
+								</div>
+								<br>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-auto">
+										<div class="item-label"><strong>Category</strong></div>
+										<div class="item-data">{{form.category}}</div>
+									</div>
+								</div>
+									<br>
+								<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>image 1</strong></div>
+											{% if partenaire.photo1 %}
+											<div class="item-data"><img src="{{partenaire.photo1.url}}" alt=""></div>
+											{% endif %}
+											<div class="item-data">{{form.photo1}}</div>
+											<br>
+										</div>
+										<hr>
+								</div>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-auto">
+										<div class="item-label"><strong>image 2</strong></div>
+										{% if partenaire.photo2 %}
+										<div class="item-data"><img src="{{partenaire.photo2.url}}" alt=""></div>
+										{% endif %}
+										<div class="item-data">{{form.photo2}}</div>
+										<br>
+									</div>
+									<hr>
+								</div>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-auto">
+										<div class="item-label"><strong>image 3</strong></div>
+										{% if partenaire.photo3 %}
+										<div class="item-data"><img src="{{partenaire.photo3.url}}" alt=""></div>
+										{% endif %}
+										<div class="item-data">{{form.photo3}}</div>
+										<br>
+									</div>
+									<hr>
+								</div>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-auto">
+										<div class="item-label"><strong>image 4</strong></div>
+										{% if partenaire.photo4 %}
+										<div class="item-data"><img src="{{partenaire.photo4.url}}" alt=""></div>
+										{% endif %}
+										<div class="item-data">{{form.photo4}}</div>
+										<br>
+									</div>
+									<hr>
+								</div>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-auto">
+										<div class="item-label"><strong>image 5</strong></div>
+										{% if partenaire.photo5 %}
+										<div class="item-data"><img src="{{partenaire.photo5.url}}" alt=""></div>
+										{% endif %}
+										<div class="item-data">{{form.photo5}}</div>
+										<br>
+									</div>
+									<hr>
+								</div>
+									<div class="app-card-footer p-4 mt-auto">
+
+										<button type="submit" class="btn app-btn-secondary">
+											Update Profile
+										</button>
+									 </div>
+								</div>
+								
+							</form>
+						    </div>
+							
+
+						   
+						</div>
+	                </div>
+					
+
+					<div id="notifications">
+						{% for message in messages %}
+							<div class="notification {{ message.tags }}">
+								<button class="delete"></button>
+								{{ message }}
+							</div>
+						{% endfor %}
+					</div>
+				
+				
+					<style>
+						#notifications {
+							position: fixed;
+							top: 50px; /* Adjust as needed */
+							left: 50%;
+							transform: translateX(-50%);
+							width: 300px; /* Adjust as needed */
+							z-index: 9999; /* Ensure notifications appear above other elements */
+						}
+						
+						.notification {
+							position: relative;
+							padding: 1rem;
+							margin-bottom: 1rem;
+							border: 1px solid transparent;
+							border-radius: 0.25rem;
+							text-align: center;
+							transition: opacity 0.5s ease-in-out;
+						}
+						
+						.notification.success {
+							background-color: #d4edda;
+							border-color: #c3e6cb;
+							color: #155724;
+						}
+						
+						.notification.error {
+							background-color: #f8d7da;
+							border-color: #f5c6cb;
+							color: #721c24;
+						}
+						
+						.notification.warning {
+							background-color: #fff3cd;
+							border-color: #ffeeba;
+							color: #856404;
+						}
+						
+						.notification.info {
+							background-color: #d1ecf1;
+							border-color: #bee5eb;
+							color: #0c5460;
+						}
+						
+						.notification .delete {
+							position: absolute;
+							top: 0.5rem;
+							right: 0.5rem;
+							cursor: pointer;
+							background-color: transparent;
+							border: none;
+							outline: none;
+							padding: 0;
+							font-size: 1rem;
+							line-height: 1;
+							color: inherit;
+						}
+						
+					</style>
+					<script>
+						document.addEventListener('DOMContentLoaded', function() {
+							const notifications = document.querySelectorAll('.notification');
+							notifications.forEach(function(notification) {
+								const closeButton = notification.querySelector('.delete');
+								closeButton.addEventListener('click', function() {
+									notification.style.opacity = '0';
+									setTimeout(function() {
+										notification.remove();
+									}, 500);
+								});
+								setTimeout(function() {
+									notification.style.opacity = '0';
+									setTimeout(function() {
+										notification.remove();
+									}, 500);
+								}, 3000); // Automatically dismiss after 3 seconds
+							});
+						});
+						
+					</script>
+    </div>   					
+
+ 
+
+{% endblock  %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ALL Achat Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-header {
+            background-color: #f2f2f2;
+        }
+
+        .table-header .header__item {
+            padding: 10px 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .table-row {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-data {
+            padding: 10px 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ALL Achat Operations</h2>
+        <table class="table">
+            <thead class="table-header">
+                <tr>
+                    <th class="header__item">Partenaire</th>
+                    <th class="header__item">Stagiaire</th>
+                    <th class="header__item">Amount</th>
+                    <th class="header__item">Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for achat in achats_all %}
+                <tr class="table-row">
+                    <td class="table-data">{{ achat.partenaire }}</td>
+                    <td class="table-data">{{ achat.stagiaire.stagiaireCode }}</td>
+                    <td class="table-data">{{ achat.amount }} MAD</td>
+                    <td class="table-data">{{ achat.date_added }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

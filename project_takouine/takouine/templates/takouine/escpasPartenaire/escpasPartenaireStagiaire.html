@@ -1,0 +1,163 @@
+{% extends "takouine/mainDashbordPartenaireSearch.html" %}
+{% load static %}
+
+{% block content %}
+<div class="app-wrapper">
+	<div class="app-content pt-3 p-md-3 p-lg-4">
+		<div class="container-xl">  
+			<div class="row g-3 mb-4 align-items-center justify-content-between">
+				<div class="col-auto">
+					<h1 class="app-page-title mb-0">Stagiaires</h1>
+				</div>
+			</div>
+		   
+			<div class="tab-content" id="orders-table-tab-content">
+				<div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+					<div class="app-card app-card-orders-table shadow-sm mb-5">
+						<div class="app-card-body">
+							<div class="table-responsive">
+								<table class="table app-table-hover mb-0 text-left">
+									<thead>
+										<tr>
+											<th class="cell">Name</th>
+											<th class="cell">Formation</th>
+											<th class="cell">Date Fin</th>
+											<th class="cell">Image</th>
+											<th class="cell">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+											<tr>
+												<td class="cell">{{ stagiaire_info.name }}</td>
+												<td class="cell">
+													<span class="truncate">
+														{% for formation in stagiaire_info.formations.all %}
+															{{ formation.name }}
+															{% if not forloop.last %}, {% endif %}
+														{% endfor %}
+													</span>
+												</td>
+												<td class="cell"><span class="badge bg-success">{{ stagiaire_info.date_fin }}</span></td>
+												<td class="cell">
+													<span class="badge bg-success">
+														{% if stagiaire_info.avatar_url %}
+															<img src="{{ stagiaire_info.avatar_url }}" style="width: 48px; height: 48px;">
+														{% else %}
+															{% comment %} No Avatar {% endcomment %}
+														{% endif %}
+													</span>
+												</td>
+												<td class="cell">
+													{% if stagiaire_info.id %}
+														<a href="{% url 'view_stagiaire' stagiaire_info.slugStagiaire %}">Voir</a>
+														<a href="{% url 'achat_form' partenaire.slugPartenaire stagiaire_info.slugStagiaire %}">Achat</a>
+														<a href="{% url 'increment_visite' slugPartenaire=partenaire.slugPartenaire slugStagiaire=stagiaire_info.slugStagiaire %}">Visite</a>
+													{% endif %}
+												</td>
+											</tr>
+											
+											
+									</tbody>
+								</table>
+
+								    
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="notifications">
+		{% for message in messages %}
+			<div class="notification {{ message.tags }}">
+				<button class="delete"></button>
+				{{ message }}
+			</div>
+		{% endfor %}
+	</div>
+	
+	
+</div>  
+<style>
+	#notifications {
+		position: fixed;
+		top: 50px; /* Adjust as needed */
+		left: 50%;
+		transform: translateX(-50%);
+		width: 300px; /* Adjust as needed */
+		z-index: 9999; /* Ensure notifications appear above other elements */
+	}
+	
+	.notification {
+		position: relative;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		border: 1px solid transparent;
+		border-radius: 0.25rem;
+		text-align: center;
+		transition: opacity 0.5s ease-in-out;
+	}
+	
+	.notification.success {
+		background-color: #d4edda;
+		border-color: #c3e6cb;
+		color: #155724;
+	}
+	
+	.notification.error {
+		background-color: #f8d7da;
+		border-color: #f5c6cb;
+		color: #721c24;
+	}
+	
+	.notification.warning {
+		background-color: #fff3cd;
+		border-color: #ffeeba;
+		color: #856404;
+	}
+	
+	.notification.info {
+		background-color: #d1ecf1;
+		border-color: #bee5eb;
+		color: #0c5460;
+	}
+	
+	.notification .delete {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		cursor: pointer;
+		background-color: transparent;
+		border: none;
+		outline: none;
+		padding: 0;
+		font-size: 1rem;
+		line-height: 1;
+		color: inherit;
+	}
+	
+</style>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const notifications = document.querySelectorAll('.notification');
+		notifications.forEach(function(notification) {
+			const closeButton = notification.querySelector('.delete');
+			closeButton.addEventListener('click', function() {
+				notification.style.opacity = '0';
+				setTimeout(function() {
+					notification.remove();
+				}, 500);
+			});
+			setTimeout(function() {
+				notification.style.opacity = '0';
+				setTimeout(function() {
+					notification.remove();
+				}, 500);
+			}, 3000); // Automatically dismiss after 3 seconds
+		});
+	});
+	
+</script>
+{% endblock %}
