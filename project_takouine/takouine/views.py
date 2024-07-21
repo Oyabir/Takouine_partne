@@ -726,27 +726,72 @@ def rapportsFormation(request):
     return render(request, 'takouine/escpasAdminRapports/rapportsFormation.html', {'stagiaires': stagiaires,'partenaires':partenaires})
 
 
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from io import BytesIO
+from django.template.loader import render_to_string
+
 
 #pdf ALL Stagiaires 
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['admin','Edituer'])   
+@allowedUsers(allowedGroups=['admin', 'Edituer'])
 def generate_stagiaires_pdf(request):
     stagiaires = Stagiaire.objects.all().order_by('-date_created')
-
-    # Rendered HTML template
-    template_path = 'takouine/escpasAdminRapports/pdf_template_stagiaires.html'
     context = {'stagiaires': stagiaires}
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # Create a PDF response
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="all_stagiaires.pdf"'
-
-    # Create PDF
-    pisa_status = pisa.CreatePDF(html, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF creation error', status=500)
+    
+    # Render the HTML template to a string
+    html = render_to_string('takouine/escpasAdminRapports/pdf_template_stagiaires.html', context)
+    
+    # Create a bytes buffer for the PDF
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    
+    # Create styles
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    header_style = styles['Heading2']
+    
+    # Start with the header
+    elements = []
+    elements.append(Paragraph('ALL Stagiaires', header_style))
+    
+    # Create table data
+    table_data = []
+    table_data.append(['Name', 'Email', 'Stagiaire Code', 'Formations'])
+    
+    for stagiaire in context['stagiaires']:
+        formations = ', '.join([formation.name for formation in stagiaire.formations.all()])
+        table_data.append([
+            stagiaire.name,
+            stagiaire.email,
+            stagiaire.stagiaireCode,
+            formations
+        ])
+    
+    # Create a table and style it
+    table = Table(table_data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), '#f2f2f2'),
+        ('GRID', (0, 0), (-1, -1), 1, 'black'),
+        ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONT', (0, 1), (-1, -1), 'Helvetica'),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('BACKGROUND', (0, 1), (-1, -1), '#ffffff'),
+    ]))
+    
+    elements.append(table)
+    
+    # Build the PDF
+    doc.build(elements)
+    
+    # Get the value of the BytesIO buffer and write it to the response
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="stagiaires_all.pdf"'
     return response
 
 
@@ -754,24 +799,58 @@ def generate_stagiaires_pdf(request):
 
 #pdf ALL Partenaires
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['admin','Edituer'])   
+@allowedUsers(allowedGroups=['admin', 'Edituer'])
 def generate_partenaires_pdf(request):
     partenaires = Partenaire.objects.all().order_by('-date_created')
-
-    # Rendered HTML template
-    template_path = 'takouine/escpasAdminRapports/pdf_template_partenaires.html'
     context = {'partenaires': partenaires}
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # Create a PDF response
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="all_partenaires.pdf"'
-
-    # Create PDF
-    pisa_status = pisa.CreatePDF(html, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF creation error', status=500)
+    
+    # Render the HTML template to a string
+    html = render_to_string('takouine/escpasAdminRapports/pdf_template_partenaires.html', context)
+    
+    # Create a bytes buffer for the PDF
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    
+    # Create styles
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    header_style = styles['Heading2']
+    
+    # Start with the header
+    elements = []
+    elements.append(Paragraph('ALL Partenaires', header_style))
+    
+    # Create table data
+    table_data = []
+    table_data.append(['Company Name', 'Email', 'Company Code'])
+    
+    for partenaire in context['partenaires']:
+        table_data.append([
+            partenaire.CompanyName,
+            partenaire.Companyemail,
+            partenaire.CompanyCode
+        ])
+    
+    # Create a table and style it
+    table = Table(table_data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), '#f2f2f2'),
+        ('GRID', (0, 0), (-1, -1), 1, 'black'),
+        ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONT', (0, 1), (-1, -1), 'Helvetica'),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('BACKGROUND', (0, 1), (-1, -1), '#ffffff'),
+    ]))
+    
+    elements.append(table)
+    
+    # Build the PDF
+    doc.build(elements)
+    
+    # Get the value of the BytesIO buffer and write it to the response
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="partenaires_all.pdf"'
     return response
 
 
@@ -1170,60 +1249,123 @@ def rapportsPartenaire(request):
 
 
 
-from django.template.loader import get_template
-from xhtml2pdf import pisa
-from datetime import timedelta
 
-@login_required(login_url='login')  
-@user_passes_test(is_partner, login_url='login')
-@allowedUsers(allowedGroups=['partenaire']) 
-#pdf all achats
 def generate_pdf(request):
-    partenaire = request.user.partenaire
-    # achats_last_30_days = Achat.objects.filter(partenaire=partenaire, date_added__gte=thirty_days_ago).order_by('-date_added')
-    achats_all = Achat.objects.filter(partenaire=partenaire).order_by('-date_added')
-    # Rendered HTML template
-    template_path = 'takouine/escpasPartenaire/pdf_template.html'
-    context = {'achats_all': achats_all}
-    template = get_template(template_path)
-    html = template.render(context)
+    # Extract data from the database
+    context = {'achats_all': Achat.objects.all()}
+    
+    # Render the HTML template to a string
+    html = render_to_string('takouine/escpasPartenaire/pdf_template.html', context)
 
-    # Create a PDF response
-    response = HttpResponse(content_type='application/pdf')
+    # Create a bytes buffer for the PDF
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    
+    # Create styles
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    header_style = styles['Heading2']
+    
+    # Start with the header
+    elements = []
+    elements.append(Paragraph('ALL Achat Operations', header_style))
+    
+    # Create table data
+    table_data = []
+    table_data.append(['Partenaire', 'Stagiaire', 'Amount', 'Date Added'])
+    
+    for achat in context['achats_all']:
+        table_data.append([
+            achat.partenaire.CompanyName,
+            achat.stagiaire.stagiaireCode if achat.stagiaire else 'None',
+            f'{achat.amount} MAD',
+            achat.date_added.strftime('%Y-%m-%d %H:%M:%S')
+        ])
+    
+    # Create a table and style it
+    table = Table(table_data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), '#f2f2f2'),
+        ('GRID', (0, 0), (-1, -1), 1, 'black'),
+        ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONT', (0, 1), (-1, -1), 'Helvetica'),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('BACKGROUND', (0, 1), (-1, -1), '#ffffff'),
+    ]))
+    
+    elements.append(table)
+    
+    # Build the PDF
+    doc.build(elements)
+    
+    # Get the value of the BytesIO buffer and write it to the response
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="achats_all.pdf"'
-
-    # Create PDF
-    pisa_status = pisa.CreatePDF(html, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF creation error', status=500)
     return response
 
 
 
-@login_required(login_url='login')  
+
+@login_required(login_url='login')
 @user_passes_test(is_partner, login_url='login')
-@allowedUsers(allowedGroups=['partenaire']) 
-#pdf all visites
+@allowedUsers(allowedGroups=['partenaire'])
 def generate_visite_pdf(request):
     partenaire = request.user.partenaire
-    # thirty_days_ago = timezone.now() - timedelta(days=30)
     visite_all = Visite.objects.filter(partenaire=partenaire).order_by('-date_visited')
-
-    # Rendered HTML template
-    template_path = 'takouine/escpasPartenaire/pdf_template_visite.html'
     context = {'visite_all': visite_all}
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # Create a PDF response
-    response = HttpResponse(content_type='application/pdf')
+    
+    # Render the HTML template to a string
+    html = render_to_string('takouine/escpasPartenaire/pdf_template_visite.html', context)
+    
+    # Create a bytes buffer for the PDF
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    
+    # Create styles
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    header_style = styles['Heading2']
+    
+    # Start with the header
+    elements = []
+    elements.append(Paragraph('ALL Visite Operations', header_style))
+    
+    # Create table data
+    table_data = []
+    table_data.append(['Partenaire', 'Stagiaire', 'Date Visited'])
+    
+    for visite in context['visite_all']:
+        table_data.append([
+            visite.partenaire.CompanyName,
+            visite.stagiaire.stagiaireCode if visite.stagiaire else 'None',
+            visite.date_visited.strftime('%Y-%m-%d %H:%M:%S')
+        ])
+    
+    # Create a table and style it
+    table = Table(table_data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), '#f2f2f2'),
+        ('GRID', (0, 0), (-1, -1), 1, 'black'),
+        ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONT', (0, 1), (-1, -1), 'Helvetica'),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('BACKGROUND', (0, 1), (-1, -1), '#ffffff'),
+    ]))
+    
+    elements.append(table)
+    
+    # Build the PDF
+    doc.build(elements)
+    
+    # Get the value of the BytesIO buffer and write it to the response
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="visite_all.pdf"'
-
-    # Create PDF
-    pisa_status = pisa.CreatePDF(html, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF creation error', status=500)
     return response
+
+
+
 
 
 import datetime
