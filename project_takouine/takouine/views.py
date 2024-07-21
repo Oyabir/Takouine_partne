@@ -797,7 +797,7 @@ def generate_stagiaires_pdf(request):
 
 
 
-#pdf ALL Partenaires
+#PDF ALL Partenaires
 @login_required(login_url='login')
 @allowedUsers(allowedGroups=['admin', 'Edituer'])
 def generate_partenaires_pdf(request):
