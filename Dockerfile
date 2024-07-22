@@ -18,6 +18,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
+WORKDIR /app/venv_project/Scripts
+#RUN activate
+WORKDIR /app/venv_project/
 RUN pip install --upgrade pip && \
     pip install \
     django \
@@ -28,7 +31,7 @@ RUN pip install --upgrade pip && \
 
 # Install npm packages
 RUN npm install -g chart.js
-
+WORKDIR /app/project_takouine
 # Expose port 8000 (replace with the port your app listens on)
 EXPOSE 8000
 
