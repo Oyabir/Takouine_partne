@@ -76,7 +76,7 @@
 												{% endif %}
 											</td>	
 											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.category }}</span></td>
-											<td class="cell"><span class="note" >{{ partenaire.partenaire.description }}</span></td>
+											<td class="cell"><span class="note">{{ partenaire.partenaire.description|slice:":60" }} <br> <a href="{% url 'view_partenaire' partenaire.partenaire.slugPartenaire %}">Affiche Plus</a></span></td>
 											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.address }}</span></td>
 											<td class="cell">
 												<a href="{% url 'view_partenaire' partenaire.partenaire.slugPartenaire %}"><i class="fa-solid fa-eye"></i></a>
@@ -95,7 +95,8 @@
 													{% endif %}
 												</td>
 												<td class="cell"><span class="badge bg-success">{{ partenaire.category }}</span></td>
-												<td class="cell"><span class="note">{{ partenaire.description }}</span></td>
+												<td class="cell"><span class="note">{{ partenaire.description|slice:":60" }} <br> <a href="{% url 'view_partenaire' partenaire.slugPartenaire %}">Affiche Plus</a></span></td>
+												{% comment %} <td class="cell"><span class="note">{{ partenaire.description }}</span></td> {% endcomment %}
 												<td class="cell"><span class="badge bg-success">{{ partenaire.address }}</span></td>
 												<td class="cell">
 													<a href="{% url 'view_partenaire' partenaire.slugPartenaire %}"><i class="fa-solid fa-eye"></i></a>
