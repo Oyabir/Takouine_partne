@@ -55,30 +55,30 @@
 </head>
 <body>
     <div class="container">
-        <h2>Edit Stagiaire</h2>
+        <h2>Modifier Stagiaire</h2>
         <form method="POST" enctype="multipart/form-data" class="form">
             {% csrf_token %}
             <!-- User form fields -->
-            <label for="id_username">Username:</label>
+            <label for="id_username">Nom d'utilisateur:</label>
             {{ user_form.username }}
             <!-- Edituer form fields -->
-            <label for="id_name">Name:</label>
+            <label for="id_name">Nom et prénom:</label>
             {{ stagiaire_form.name }}
-            <label for="id_email">Email:</label>
+            <label for="id_email">E-mail:</label>
             {{ user_form.email }}
-            <label for="id_phone">Phone:</label>
+            <label for="id_phone">Téléphone:</label>
             {{ stagiaire_form.phone }}
-            <label for="id_age">Age:</label>
+            <label for="id_age">Âge:</label>
             {{ stagiaire_form.age }}
-            <label for="id_avatar">avatar:</label>
+            <label for="id_avatar">Avatar:</label>
             {{ stagiaire_form.avatar }}
-            <label for="id_formations">formations:</label>
+            <label for="id_formations">Formations:</label>
             {{ stagiaire_form.formations }}
-            <label for="id_date_debut">date debut:</label>
+            <label for="id_date_debut">Date de début:</label>
             {{ stagiaire_form.date_debut }}
-            <label for="id_date_fin">date fin:</label>
+            <label for="id_date_fin">date de fin:</label>
             {{ stagiaire_form.date_fin }}
-            <button type="submit">Update</button>
+            <button type="submit">Mise à jour de Stagiaire</button>
         </form>
 
 

@@ -47,15 +47,61 @@
         button[type="submit"]:hover {
             background-color: #45a049;
         }
+                /* Basic form styling */
+        form {
+            max-width: 500px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            background-color: #f9f9f9; 
+        }
+
+        /* Label styling */
+        form label {
+            display: block; 
+            margin-bottom: 10px; 
+            font-size: 16px;
+            color: #333; 
+        }
+
+        /* Input styling */
+        form input[type="text"] {
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            box-sizing: border-box; 
+            margin-bottom: 20px; 
+        }
+
+        /* Button styling */
+        form button {
+            display: inline-block; 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            color: #fff; 
+            background-color: #007bff; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease; 
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
         
     </style>
 </head>
 <body>
+    <br><br><br>
     <form method="post">
         {% csrf_token %}
-        <label for="amount">Enter Name Formation:</label>
+        <label for="amount">Entrez Nom du la formation:</label>
         <input type="text" name="name" id="name" placeholder="Enter Name Formation" required>
-        <button type="submit">Add Formation</button>
+        <button type="submit">Ajouter une formation</button>
     </form>
     
 </body>

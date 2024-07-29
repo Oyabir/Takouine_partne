@@ -141,6 +141,13 @@ class Partenaire(models.Model):
         ('Services', 'Services'),
     ]
     
+    DISCOUNT_CHOICES = [
+        ('Entre 5% et 15%', 'Entre 5% et 15%'),
+        ('Entre 15% et 25%', 'Entre 15% et 25%'),
+        ('Entre 25% et 50%', 'Entre 25% et 50%'),
+        ('Plus que 50%', 'Plus que 50%'),
+    ]
+    
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     CompanyName = models.CharField(max_length=100, null=True, unique=True) #If have a problem in id == slug add , unique=True
     CompanyPhone = models.CharField(max_length=100, null=True)
@@ -160,6 +167,7 @@ class Partenaire(models.Model):
     photo5 = models.ImageField(null=True, blank=True)
     
     slugPartenaire = models.SlugField(blank=True, null=True)
+    discount = models.CharField(max_length=50, choices=DISCOUNT_CHOICES, null=True, blank=True)  # Added field
     
     def save(self, *args, **kwargs):
         if not self.slugPartenaire:
@@ -169,6 +177,9 @@ class Partenaire(models.Model):
 
     def __str__(self):
         return self.CompanyName
+
+
+
 
   
   

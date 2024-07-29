@@ -1,11 +1,11 @@
 
 <div class="container pb-5">
-    <h1>Delete Edituer</h1>
-    <p>Are you sure you want to delete <strong>{{ edituer.user.username }}</strong>?</p>
+    <h1>Supprimer l'éditeur</h1>
+    <p>Etes-vous sûr que vous voulez supprimer <strong>{{ edituer.user.username }}</strong>?</p>
     <form method="POST">
         {% csrf_token %}
-    <a href="{% url 'escpasAdmin' %}">Return</a>
-    <button type="submit" >OK</button>
+    <a href="{% url 'escpasAdmin' %}">Retour</a>
+    <button type="submit" >Oui</button>
     </form>
 </div>
 

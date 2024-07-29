@@ -66,9 +66,9 @@
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav scrollspy-nav justify-content-end flex-grow-1 gap-lg-5 pe-3">
-              <li class="nav-item dropdown">
+              {% comment %} <li class="nav-item dropdown">
                 <a class="nav-link text-dark active " href="{% url 'home' %}" aria-haspopup="true" aria-expanded="false"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-              </li>
+              </li> {% endcomment %}
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a class="nav-link text-dark active" href="" id="dropdownPages" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i>{{request.user}}</a>
@@ -77,9 +77,9 @@
                 <a class="nav-link text-dark" data-target="services" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
               </li>
               {% else %}
-              <li class="nav-item dropdown">
+              {% comment %} <li class="nav-item dropdown">
                 <a class="nav-link text-dark active " href="{% url 'douvientpartenaire' %}"   aria-haspopup="true" aria-expanded="false"><i class="fa fa-question-circle" aria-hidden="true"></i>D'où vient le partenaire ?</a>
-              </li>
+              </li> {% endcomment %}
               {% comment %} <li class="scrollspy-link nav-item">
                 <a class="nav-link text-dark" data-target="testimonials" href="{% url 'Partenairelogin' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>login</a>
               </li> {% endcomment %}

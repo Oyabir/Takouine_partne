@@ -6,40 +6,40 @@
 <div class="container" style="width: 969px;">
   <div class="left">
     <div class="header">
-      <h2 class="animation a1">Add Edituer Here</h2>
+      <h2 class="animation a1">Ajouter un éditeur ici</h2>
     </div>
     <form action="" method="POST" class="form">
       {% csrf_token %}
       <div class="form-field">
-        <label for="id_username">Username:</label>
+        <label for="id_username">Nom d'utilisateur:</label>
         {{ form.username }}
       </div>
       <div class="form-field">
-        <label for="id_email">Email:</label>
+        <label for="id_email">E-mail:</label>
         {{ form.email }}
       </div>
       <div class="form-field">
-        <label for="id_password1">Password:</label>
+        <label for="id_password1">Mot de passe:</label>
         {{ form.password1 }}
       </div>
       <div class="form-field">
-        <label for="id_password2">Confirm Password:</label>
+        <label for="id_password2">Confirmez le mot de passe:</label>
         {{ form.password2 }}
       </div>
       <div class="form-field">
-        <label for="id_name">Full Name:</label>
+        <label for="id_name">Nom et prénom:</label>
         {{ form.name }}
       </div>
       <div class="form-field">
-        <label for="id_phone">Phone:</label>
+        <label for="id_phone">Téléphone:</label>
         {{ form.phone }}
       </div>
       <div class="form-field">
-        <label for="id_age">Age:</label>
+        <label for="id_age">Âge:</label>
         {{ form.age }}
       </div>
       {% comment %} <button class="btn btn-primary" type="submit">Add Edituer</button> {% endcomment %}
-      <button type="submit" class="btn btn-dark">Add Edituer</button>
+      <button type="submit" class="btn btn-dark">Ajouter un éditeur</button>
 
     </form>
   </div>

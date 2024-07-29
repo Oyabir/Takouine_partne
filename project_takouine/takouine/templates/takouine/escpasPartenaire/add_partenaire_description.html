@@ -10,7 +10,7 @@
 	    <div class="app-content pt-3 p-md-3 p-lg-4">
 		    <div class="container-xl">
 			    
-			    <h1 class="app-page-title">My Account</h1>
+			    <h1 class="app-page-title">Mon compte</h1>
                 <div class="row gy-4">
 	                <div class="col-12 col-lg-6">
 		                <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
@@ -25,7 +25,7 @@
 						                
 							        </div><!--//col-->
 							        <div class="col-auto">
-								        <h4 class="app-card-title">Profile</h4>
+								        <h4 class="app-card-title">Profil</h4>
 							        </div><!--//col-->
 						        </div><!--//row-->
 						    </div><!--//app-card-header-->
@@ -43,7 +43,7 @@
 							    <div class="item border-bottom py-3">
 								    <div class="row justify-content-between align-items-center">
 									    <div class="col-auto">
-										    <div class="item-label"><strong>CompanyName</strong></div>
+										    <div class="item-label"><strong>Nom de l'entreprise</strong></div>
 									        <div class="item-data">{{partenaire.CompanyName}}</div>
 									    </div>
 									    
@@ -52,7 +52,7 @@
 							    <div class="item border-bottom py-3">
 								    <div class="row justify-content-between align-items-center">
 									    <div class="col-auto">
-										    <div class="item-label"><strong>description</strong></div>
+										    <div class="item-label"><strong>Description</strong></div>
 									        <div class="item-data" >{{partenaire.description}}</div>
 									    </div>
 									    
@@ -61,7 +61,7 @@
 							    <div class="item border-bottom py-3">
 								    <div class="row justify-content-between align-items-center">
 									    <div class="col-auto">
-										    <div class="item-label"><strong>Address</strong></div>
+										    <div class="item-label"><strong>Adresse</strong></div>
 									        <div class="item-data" >
 										        {{partenaire.address}}
 									        </div>
@@ -71,9 +71,19 @@
 								<div class="item border-bottom py-3">
 								    <div class="row justify-content-between align-items-center">
 									    <div class="col-auto">
-										    <div class="item-label"><strong>Category</strong></div>
+										    <div class="item-label"><strong>Catégorie</strong></div>
 									        <div class="item-data">
 										       {{partenaire.category}}
+									        </div>
+									    </div>
+								    </div>
+							    </div>
+								<div class="item border-bottom py-3">
+								    <div class="row justify-content-between align-items-center">
+									    <div class="col-auto">
+										    <div class="item-label"><strong>Remise</strong></div>
+									        <div class="item-data">
+										       {{partenaire.discount}}
 									        </div>
 									    </div>
 								    </div>
@@ -81,7 +91,7 @@
 							    <div class="item border-bottom py-3">
 								    <div class="row justify-content-between align-items-center">
 									    <div class="col-auto">
-										    <div class="item-label"><strong>phone</strong></div>
+										    <div class="item-label"><strong>Téléphone</strong></div>
 									        <div class="item-data">
 										       {{partenaire.CompanyPhone}}
 									        </div>
@@ -92,7 +102,7 @@
 								<div class="item border-bottom py-3">
 								    <div class="row justify-content-between align-items-center">
 									    <div class="col-auto">
-										    <div class="item-label"><strong>Mail</strong></div>
+										    <div class="item-label"><strong>E-mail</strong></div>
 									        <div class="item-data">
 										       {{partenaire.Companyemail}}
 									        </div>
@@ -147,140 +157,130 @@
 							        <div class="col-auto">
 								        <div class="app-icon-holder">
 										    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
-</svg>
+ 												<path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
+											</svg>
 									    </div>
-						                
 							        </div>
-							        <div class="col-auto">
-								        <h4 class="app-card-title">Update Profile</h4>
-							        </div>
-						        </div>
-						    </div>
-						    <div class="app-card-body px-4 w-100">
-							    
-							    <div class="item border-bottom py-3">
-									<form method="post" enctype="multipart/form-data">
-										{% csrf_token %}
-								    <div class="row justify-content-between align-items-center">
-									    <div class="col-auto">
-											<div class="item-label"><strong>CompanyName</strong></div>
-											<div class="item-data">{{form.CompanyName}}</div>
-									    </div>
-								    </div><br>
-									<div class="row justify-content-between align-items-center">
-									    <div class="col-auto">
-											<div class="item-label"><strong>CompanyPhone</strong></div>
-											<div class="item-data">{{form.CompanyPhone}}</div>
-									    </div>
-								    </div><br>
-									<div class="row justify-content-between align-items-center">
-									    <div class="col-auto">
-											<div class="item-label"><strong>Mail</strong></div>
-											<div class="item-data">{{form.Companyemail}}</div>
-									    </div>
-								    </div><br>
-									<div class="row justify-content-between align-items-center">
-									    <div class="col-auto">
-											<div class="item-label"><strong>Description</strong></div>
-											<div class="item-data">{{form.description}}</div>
-									    </div>
-								    </div>
-									<br>
-									<div class="row justify-content-between align-items-center">
-									    <div class="col-auto">
-											<div class="item-label"><strong>Address</strong></div>
-											<div class="item-data">{{form.address}}</div>
-									    </div>
-								    </div>
-							    </div>
-								<div class="row justify-content-between align-items-center">
 									<div class="col-auto">
-										<div class="item-label"><strong>logo</strong></div>
-										{% if partenaire.logo %}
-										<div class="item-data"><img src="{{partenaire.logo.url}}" alt=""></div>
-										{% endif %}
-										<div class="item-data">{{form.logo}}</div>
+										<h4 class="app-card-title">Mettre à jour le profil</h4>
 									</div>
-								</div>
-								<br>
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<div class="item-label"><strong>Category</strong></div>
-										<div class="item-data">{{form.category}}</div>
 									</div>
-								</div>
-									<br>
-								<div class="row justify-content-between align-items-center">
-										<div class="col-auto">
-											<div class="item-label"><strong>image 1</strong></div>
-											{% if partenaire.photo1 %}
-											<div class="item-data"><img src="{{partenaire.photo1.url}}" alt=""></div>
-											{% endif %}
-											<div class="item-data">{{form.photo1}}</div>
-											<br>
+									</div>
+									<div class="app-card-body px-4 w-100">
+									
+										<div class="item border-bottom py-3">
+											<form method="post" enctype="multipart/form-data">
+												{% csrf_token %}
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Nom de l'entreprise</strong></div>
+														<div class="item-data">{{ form.CompanyName }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Téléphone de l'entreprise</strong></div>
+														<div class="item-data">{{ form.CompanyPhone }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>E-mail</strong></div>
+														<div class="item-data">{{ form.Companyemail }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Description</strong></div>
+														<div class="item-data">{{ form.description }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Adresse</strong></div>
+														<div class="item-data">{{ form.address }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Logo</strong></div>
+														{% if partenaire.logo %}
+														<div class="item-data"><img src="{{ partenaire.logo.url }}" alt="" style="max-width: 100px; height: auto;"></div>
+														{% endif %}
+														<div class="item-data">{{ form.logo }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Catégorie</strong></div>
+														<div class="item-data">{{ form.category }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Remise</strong></div>
+														<div class="item-data">{{ form.discount }}</div>
+													</div>
+												</div><br>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Image 1</strong></div>
+														{% if partenaire.photo1 %}
+														<div class="item-data"><img src="{{ partenaire.photo1.url }}" alt="" style="max-width: 100px; height: auto;"></div>
+														{% endif %}
+														<div class="item-data">{{ form.photo1 }}</div>
+													</div>
+													<hr>
+												</div>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Image 2</strong></div>
+														{% if partenaire.photo2 %}
+														<div class="item-data"><img src="{{ partenaire.photo2.url }}" alt="" style="max-width: 100px; height: auto;"></div>
+														{% endif %}
+														<div class="item-data">{{ form.photo2 }}</div>
+													</div>
+													<hr>
+												</div>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Image 3</strong></div>
+														{% if partenaire.photo3 %}
+														<div class="item-data"><img src="{{ partenaire.photo3.url }}" alt="" style="max-width: 100px; height: auto;"></div>
+														{% endif %}
+														<div class="item-data">{{ form.photo3 }}</div>
+													</div>
+													<hr>
+												</div>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Image 4</strong></div>
+														{% if partenaire.photo4 %}
+														<div class="item-data"><img src="{{ partenaire.photo4.url }}" alt="" style="max-width: 100px; height: auto;"></div>
+														{% endif %}
+														<div class="item-data">{{ form.photo4 }}</div>
+													</div>
+													<hr>
+												</div>
+												<div class="row justify-content-between align-items-center">
+													<div class="col-auto">
+														<div class="item-label"><strong>Image 5</strong></div>
+														{% if partenaire.photo5 %}
+														<div class="item-data"><img src="{{ partenaire.photo5.url }}" alt="" style="max-width: 100px; height: auto;"></div>
+														{% endif %}
+														<div class="item-data">{{ form.photo5 }}</div>
+													</div>
+													<hr>
+												</div>
+												<div class="app-card-footer p-4 mt-auto">
+													<button type="submit" class="btn app-btn-secondary">
+														Mettre à jour le profil
+													</button>
+												</div>
+											</form>
 										</div>
-										<hr>
-								</div>
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<div class="item-label"><strong>image 2</strong></div>
-										{% if partenaire.photo2 %}
-										<div class="item-data"><img src="{{partenaire.photo2.url}}" alt=""></div>
-										{% endif %}
-										<div class="item-data">{{form.photo2}}</div>
-										<br>
 									</div>
-									<hr>
-								</div>
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<div class="item-label"><strong>image 3</strong></div>
-										{% if partenaire.photo3 %}
-										<div class="item-data"><img src="{{partenaire.photo3.url}}" alt=""></div>
-										{% endif %}
-										<div class="item-data">{{form.photo3}}</div>
-										<br>
-									</div>
-									<hr>
-								</div>
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<div class="item-label"><strong>image 4</strong></div>
-										{% if partenaire.photo4 %}
-										<div class="item-data"><img src="{{partenaire.photo4.url}}" alt=""></div>
-										{% endif %}
-										<div class="item-data">{{form.photo4}}</div>
-										<br>
-									</div>
-									<hr>
-								</div>
-								<div class="row justify-content-between align-items-center">
-									<div class="col-auto">
-										<div class="item-label"><strong>image 5</strong></div>
-										{% if partenaire.photo5 %}
-										<div class="item-data"><img src="{{partenaire.photo5.url}}" alt=""></div>
-										{% endif %}
-										<div class="item-data">{{form.photo5}}</div>
-										<br>
-									</div>
-									<hr>
-								</div>
-									<div class="app-card-footer p-4 mt-auto">
-
-										<button type="submit" class="btn app-btn-secondary">
-											Update Profile
-										</button>
-									 </div>
-								</div>
-								
-							</form>
-						    </div>
-							
-
-						   
-						</div>
-	                </div>
+									
 					
 
 					<div id="notifications">
@@ -294,6 +294,100 @@
 				
 				
 					<style>
+												/* General Styles */
+						{% comment %} body {
+							font-family: Arial, sans-serif;
+						} {% endcomment %}
+
+						.app-card-body {
+							background-color: #f9f9f9;
+							border-radius: 8px;
+							box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+							padding: 20px;
+							margin: 20px 0;
+						}
+
+						.app-card-title {
+							font-size: 1.5rem;
+							color: #333;
+							margin-bottom: 20px;
+						}
+
+						/* Form Styles */
+						form {
+							display: flex;
+							flex-direction: column;
+						}
+
+						.item {
+							margin-bottom: 20px;
+						}
+
+						.item-label {
+							font-weight: bold;
+							margin-bottom: 5px;
+							color: #555;
+						}
+
+						.item-data {
+							margin-bottom: 10px;
+						}
+
+						.item-data img {
+							border-radius: 5px;
+						}
+
+						hr {
+							border: 1px solid #ddd;
+							margin: 20px 0;
+						}
+
+						/* Input Fields */
+						input[type="text"],
+						input[type="email"],
+						textarea,
+						select {
+							width: 100%;
+							padding: 10px;
+							border: 1px solid #ccc;
+							border-radius: 4px;
+							box-sizing: border-box;
+							font-size: 1rem;
+						}
+
+						input[type="file"] {
+							border: none;
+							padding: 0;
+							font-size: 1rem;
+						}
+
+						button {
+							background-color: #007bff;
+							color: #fff;
+							border: none;
+							padding: 10px 20px;
+							border-radius: 5px;
+							font-size: 1rem;
+							cursor: pointer;
+							transition: background-color 0.3s ease;
+						}
+
+						button:hover {
+							background-color: #0056b3;
+						}
+
+						/* Responsive Design */
+						@media (max-width: 768px) {
+							.row {
+								flex-direction: column;
+							}
+
+							.col-auto {
+								width: 100%;
+								margin-bottom: 20px;
+							}
+						}
+
 						#notifications {
 							position: fixed;
 							top: 50px; /* Adjust as needed */

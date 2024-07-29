@@ -15,14 +15,14 @@
 								<form method="GET" action="{% url 'filter_partenaire' %}" class="table-search-form row gx-1 align-items-center">
 									<div class="col-auto">
 										<select method="GET" class="form-control" action="{% url 'filter_partenaire' %}" id="category" name="category" style="height: 43px;">
-											<option value="">All Categories</option>
+											<option value="">Toutes catégories</option>
 											{% for choice in partenaire_categories %}
 												<option  id="category" name="category" value="{{ choice.0 }}">{{ choice.1 }}</option>
 											{% endfor %}
 										</select>
 									</div>
 									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Search</button>
+										<button type="submit" class="btn app-btn-secondary">Recherche</button>
 									</div>
 								</form>
 								
@@ -54,12 +54,13 @@
 									<thead>
 										<tr>
 											<th class="cell">N°</th>
-											<th class="cell">Name Company</th>
-											<th class="cell">Phone</th>
+											<th class="cell">Nom de l'entreprise</th>
+											<th class="cell">Téléphone</th>
 											<th class="cell">Logo</th>
-											<th class="cell">Category</th>
+											<th class="cell">Catégorie</th>
 											<th class="cell">Description</th>
-											<th class="cell">Address</th>
+											<th class="cell">Adresse</th>
+											<th class="cell">Remise</th>
 											<th class="cell">Action</th>
 										</tr>
 									</thead>
@@ -78,6 +79,7 @@
 											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.category }}</span></td>
 											<td class="cell"><span class="note">{{ partenaire.partenaire.description|slice:":60" }} <br> <a href="{% url 'view_partenaire' partenaire.partenaire.slugPartenaire %}">Affiche Plus</a></span></td>
 											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.address }}</span></td>
+											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.discount }}</span></td>
 											<td class="cell">
 												<a href="{% url 'view_partenaire' partenaire.partenaire.slugPartenaire %}"><i class="fa-solid fa-eye"></i></a>
 											</td>
@@ -98,6 +100,7 @@
 												<td class="cell"><span class="note">{{ partenaire.description|slice:":60" }} <br> <a href="{% url 'view_partenaire' partenaire.slugPartenaire %}">Affiche Plus</a></span></td>
 												{% comment %} <td class="cell"><span class="note">{{ partenaire.description }}</span></td> {% endcomment %}
 												<td class="cell"><span class="badge bg-success">{{ partenaire.address }}</span></td>
+												<td class="cell"><span class="badge bg-success">{{ partenaire.discount }}</span></td>
 												<td class="cell">
 													<a href="{% url 'view_partenaire' partenaire.slugPartenaire %}"><i class="fa-solid fa-eye"></i></a>
 												</td>

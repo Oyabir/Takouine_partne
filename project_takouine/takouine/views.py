@@ -28,20 +28,20 @@ from django.shortcuts import redirect, reverse
 from django.db.models import Count
 
 
-#Home
-def home(request):
-    if request.user.is_authenticated:
-        # Check if the user belongs to the group "Edituer" and "Stagiaire"
-        is_edituer = request.user.groups.filter(name='Edituer').exists()
-        is_stagiaire = request.user.groups.filter(name='stagiaire').exists()
-        is_partenaire = request.user.groups.filter(name='partenaire').exists()
-    else:
-        is_edituer = False
-        is_stagiaire = False   
-        is_partenaire= False     
-    context = {"is_edituer": is_edituer,"is_stagiaire": is_stagiaire,"is_partenaire": is_partenaire}
+# #Home
+# def home(request):
+#     if request.user.is_authenticated:
+#         # Check if the user belongs to the group "Edituer" and "Stagiaire"
+#         is_edituer = request.user.groups.filter(name='Edituer').exists()
+#         is_stagiaire = request.user.groups.filter(name='stagiaire').exists()
+#         is_partenaire = request.user.groups.filter(name='partenaire').exists()
+#     else:
+#         is_edituer = False
+#         is_stagiaire = False   
+#         is_partenaire= False     
+#     context = {"is_edituer": is_edituer,"is_stagiaire": is_stagiaire,"is_partenaire": is_partenaire}
 
-    return render(request, "takouine/home.html",context)
+#     return render(request, "takouine/home.html",context)
 
 
 
@@ -128,10 +128,30 @@ def Stagiairelogin(request):
     
 from django.contrib.auth.decorators import login_required
 
+
+
 #Logout for all
+
 def userLogout(request):
-   logout(request)
-   return redirect('home')
+    if request.user.is_authenticated:
+        if request.user.groups.filter(name='partenaire').exists():
+            redirect_path = 'EscapePartenaireLogin'
+        elif request.user.groups.filter(name='stagiaire').exists():
+            redirect_path = 'EscapeStagiaireLogin'
+        elif request.user.groups.filter(name='admin').exists():
+            redirect_path = 'EscapePartenaireLogin'
+        elif request.user.groups.filter(name='Edituer').exists():
+            redirect_path = 'EscapePartenaireLogin'
+        else:
+            redirect_path = 'EscapePartenaireLogin'  # Default redirect
+
+        # Perform logout
+        logout(request)
+        
+        # Redirect to the appropriate page
+        return redirect(redirect_path)
+
+
 
 
 #escpasAdmin
@@ -279,26 +299,40 @@ def add_formation(request):
 
 
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['admin'])  
+@allowedUsers(allowedGroups=['admin'])
 def add_formationAdmin(request):
-    form = add_formation(request)
-    if isinstance(form, FormationForm):  # Check if form is an instance of a form
-        messages.success(request, 'Formation added successfully!')
-        return render(request, 'takouine/escpasAdminFormation/add_formation.html', {'form': form})
+    if request.method == 'POST':
+        form = FormationForm(request.POST, request.FILES)  
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            messages.success(request, 'Formation added successfully!')
+            return redirect('escpasAdminFormation')  # Redirect to a list view
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
-        return form  
-    
+        form = FormationForm()  
+    return render(request, 'takouine/escpasAdminFormation/add_formation.html', {'form': form})
+
+
+
 
 
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['Edituer'])  
+@allowedUsers(allowedGroups=['Edituer'])
 def add_formationEdituer(request):
-    form = add_formation(request)
-    if isinstance(form, FormationForm):  # Check if form is an instance of a form
-        messages.success(request, 'Formation added successfully!')
-        return render(request, 'takouine/escpasEdituer/add_formation.html', {'form': form})
+    if request.method == 'POST':
+        form = FormationForm(request.POST, request.FILES)  #i can delated request.FILES
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            messages.success(request, 'Formation added successfully!')
+            return redirect('escpasEdituerFormation')  # Redirect to a list view
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
-        return form  
+        form = FormationForm()  
+
+    return render(request, 'takouine/escpasEdituer/add_formation.html', {'form': form})
+
     
 
 
@@ -310,11 +344,25 @@ def delete_formation(request, slugFormation):
     if request.method == 'POST':
         formation.delete()
         messages.success(request, 'Formation deleted successfully!')
+        # Check if the user is an admin or an editor and set the redirect URL
         if request.user.groups.filter(name='admin').exists():
-            return redirect('/escpasAdminFormation')
+            redirect_url = 'escpasAdminFormation'
         elif request.user.groups.filter(name='Edituer').exists():
-            return redirect('/escpasEdituerFormation')
-    return render(request, 'takouine/escpasAdminFormation/delete_formation.html', {'formation': formation})
+            redirect_url = 'escpasEdituerFormation'
+        return redirect(reverse(redirect_url))
+    
+    # Pass the redirect_url to the template
+    if request.user.groups.filter(name='admin').exists():
+        redirect_url = 'escpasAdminFormation'
+    elif request.user.groups.filter(name='Edituer').exists():
+        redirect_url = 'escpasEdituerFormation'
+    else:
+        redirect_url = None
+
+    return render(request, 'takouine/escpasAdminFormation/delete_formation.html', {
+        'formation': formation,
+        'redirect_url': redirect_url
+    })
 
 
 
@@ -474,10 +522,9 @@ def update_stagiaire(request, slugStagiaire):
 
 
 
-
-#Delete Stagiaire
+# Delete Stagiaire
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['admin', 'Edituer'])    
+@allowedUsers(allowedGroups=['admin', 'Edituer'])
 def delete_stagiaire(request, slugStagiaire):
     try:
         stagiaire = get_object_or_404(Stagiaire, slugStagiaire=slugStagiaire)
@@ -485,15 +532,27 @@ def delete_stagiaire(request, slugStagiaire):
         return HttpResponse("stagiaire does not exist.", status=404)
 
     if request.method == 'POST':
-        stagiaire.user.delete() 
+        stagiaire.user.delete()
         stagiaire.delete()
-         # Check if the user is an admin or an editor
+        
+        # Check user group and redirect
         if request.user.groups.filter(name='admin').exists():
-                return redirect('/escpasAdminStagiaire')  
+            return redirect('/escpasAdminStagiaire')
         elif request.user.groups.filter(name='Edituer').exists():
-                return redirect('/escpasEdituer') 
+            return redirect('/escpasEdituer')
 
-    return render(request, 'takouine/escpasAdminStagiaire/delete_stagiaire.html', {'stagiaire': stagiaire})
+    # Determine the redirect URL for the template
+    if request.user.groups.filter(name='admin').exists():
+        redirect_url = 'escpasAdminStagiaire'
+    elif request.user.groups.filter(name='Edituer').exists():
+        redirect_url = 'escpasEdituer'
+    else:
+        redirect_url = None  # or a default URL if needed
+
+    return render(request, 'takouine/escpasAdminStagiaire/delete_stagiaire.html', {
+        'stagiaire': stagiaire,
+        'redirect_url': redirect_url
+    })
 
 
 
@@ -616,29 +675,43 @@ def update_partenaire(request, slugPartenaire):
 
 
 
-#Delete Partenaire
+
+
+# Delete Partenaire
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['admin', 'Edituer'])    
+@allowedUsers(allowedGroups=['admin', 'Edituer'])
 def delete_partenaire(request, slugPartenaire):
     try:
-        partenaire = get_object_or_404(Partenaire,slugPartenaire=slugPartenaire)
+        partenaire = get_object_or_404(Partenaire, slugPartenaire=slugPartenaire)
     except Partenaire.DoesNotExist:
         return HttpResponse("Partenaire does not exist.", status=404)
 
     if request.method == 'POST':
-        partenaire.user.delete()  
-        partenaire.delete()  
-        # Check if the user is an admin or an editor
+        partenaire.user.delete()
+        partenaire.delete()
+        
+        # Check user group and redirect
         if request.user.groups.filter(name='admin').exists():
-                return redirect('/escpasAdminPartenaire')  
+            return redirect('/escpasAdminPartenaire')
         elif request.user.groups.filter(name='Edituer').exists():
-                return redirect('/escpasEdituerPartenaire')  
+            return redirect('/escpasEdituerPartenaire')
 
-    return render(request, 'takouine/escpasAdminPartenaire/delete_partenaire.html', {'partenaire': partenaire})
+    # Determine the redirect URL for the template
+    if request.user.groups.filter(name='admin').exists():
+        redirect_url = 'escpasAdminPartenaire'
+    elif request.user.groups.filter(name='Edituer').exists():
+        redirect_url = 'escpasEdituerPartenaire'
+    else:
+        redirect_url = None  # or a default URL if needed
+
+    return render(request, 'takouine/escpasAdminPartenaire/delete_partenaire.html', {
+        'partenaire': partenaire,
+        'redirect_url': redirect_url
+    })
 
 
 
-#Change Password for Partenaire
+# Change Password for Partenaire
 @login_required(login_url='login')
 @allowedUsers(allowedGroups=['admin', 'Edituer'])    
 def change_password_partenaire(request, slugPartenaire):
@@ -651,20 +724,30 @@ def change_password_partenaire(request, slugPartenaire):
             form.save()
             update_session_auth_hash(request, form.user)
             messages.success(request, 'Your password was successfully updated!')
-             # Check if the user is an admin or an editor
+            # Check if the user is an admin or an editor
             if request.user.groups.filter(name='admin').exists():
-                return redirect('/escpasAdminStagiaire')
+                return redirect('/escpasAdminPartenaire')  # Adjusted to correct URL
             elif request.user.groups.filter(name='Edituer').exists():
-                return redirect('/escpasEdituerPartenaire') 
+                return redirect('/escpasEdituerPartenaire')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(user)
     
-    return render(request, 'takouine/escpasAdminPartenaire/change_password_partenaire.html', {'form': form})
+    # Determine the redirect URL for the template
+    if request.user.groups.filter(name='admin').exists():
+        redirect_url = 'escpasAdminPartenaire'
+    elif request.user.groups.filter(name='Edituer').exists():
+        redirect_url = 'escpasEdituerPartenaire'
+    else:
+        redirect_url = 'home'  # Default URL if needed
 
-
-
+    return render(request, 'takouine/escpasAdminPartenaire/change_password_partenaire.html', {
+        'form': form,
+        'redirect_url': redirect_url
+    })
+    
+    
 #escpasAdminStagiaire
 @login_required(login_url='login')
 @allowedUsers(allowedGroups=['admin', 'Edituer'])    
@@ -757,11 +840,11 @@ def generate_stagiaires_pdf(request):
     
     # Start with the header
     elements = []
-    elements.append(Paragraph('ALL Stagiaires', header_style))
+    elements.append(Paragraph('Tous les Stagiaires', header_style))
     
     # Create table data
     table_data = []
-    table_data.append(['Name', 'Email', 'Stagiaire Code', 'Formations'])
+    table_data.append(["Nom d'utilisateur", 'E-mail', 'Code Stagiaire', 'Formations'])
     
     for stagiaire in context['stagiaires']:
         formations = ', '.join([formation.name for formation in stagiaire.formations.all()])
@@ -818,11 +901,11 @@ def generate_partenaires_pdf(request):
     
     # Start with the header
     elements = []
-    elements.append(Paragraph('ALL Partenaires', header_style))
+    elements.append(Paragraph('Tous les partenaires', header_style))
     
     # Create table data
     table_data = []
-    table_data.append(['Company Name', 'Email', 'Company Code'])
+    table_data.append(["Nom de l'entreprise", 'E-mail', "Code de l'entreprise"])
     
     for partenaire in context['partenaires']:
         table_data.append([

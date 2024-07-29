@@ -1,12 +1,16 @@
 
 <div class="container pb-5">
-    <h1>Delete Partenaire</h1>
-    <p>Are you sure you want to delete <strong>{{ partenaire.user.username }}</strong>?</p>
-    <form method="POST">
-        {% csrf_token %}
-    <a href="{% url 'escpasAdminPartenaire' %}">Return</a>
-    <button type="submit" >OK</button>
-    </form>
+  <h1>Supprimer le partenaire</h1>
+  <p>Etes-vous sûr que vous voulez supprimer <strong>{{ partenaire.user.username }}</strong>?</p>
+  <form method="POST">
+      {% csrf_token %}
+      {% if redirect_url %}
+          <a href="{% url redirect_url %}">Retour</a>
+      {% else %}
+          <a href="{% url 'default_url_name' %}">Retour</a>  <!-- Provide a default URL or handle as needed -->
+      {% endif %}
+      <button type="submit">Oui</button>
+  </form>
 </div>
 
 

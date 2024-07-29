@@ -66,9 +66,9 @@
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav scrollspy-nav justify-content-end flex-grow-1 gap-lg-5 pe-3">
-              <li class="nav-item dropdown">
+              {% comment %} <li class="nav-item dropdown">
                 <a class="nav-link text-dark active " href="{% url 'home' %}" aria-haspopup="true" aria-expanded="false"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-              </li>
+              </li> {% endcomment %}
               {% if user.is_authenticated %}
              
               <li class="nav-item dropdown">

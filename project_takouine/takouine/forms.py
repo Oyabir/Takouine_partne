@@ -104,12 +104,14 @@ class PartenaireFormUpdate(forms.ModelForm):
         
         
         
-
 class PartenaireMoreForm(forms.ModelForm):
     class Meta:
         model = Partenaire
-        fields = ['CompanyName', 'Companyemail','CompanyPhone', 'description', 'address', 'logo', 'photo1', 'photo2', 'photo3', 'photo4', 'photo5', 'category']
-        
+        fields = [
+            'CompanyName', 'Companyemail', 'CompanyPhone', 
+            'description', 'address', 'logo', 'photo1', 
+            'photo2', 'photo3', 'photo4', 'photo5', 'category', 'discount'
+        ]        
         
        
         

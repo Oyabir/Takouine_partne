@@ -56,10 +56,10 @@
 <body>
     <br><br><br><br>
     <div class="container">
-        <h2>Show Data of Stagiaire</h2>
+        <h2>Afficher les informations de Stagiaire</h2>
         <br>
         <div>
-            <label >Username:</label>
+            <label >Nom d'utilisateur:</label>
             <h3>{{ stagiaire.name }}</h3>
 
             <label >Formation:</label>
@@ -68,7 +68,7 @@
                 {% if not forloop.last %}, {% endif %}
               {% endfor %}</h3>
 
-            <label >Date Fin:</label>
+            <label >Date de fin:</label>
             <h3>{{ stagiaire.date_fin }}</h3>
 
             <label >Image:</label>

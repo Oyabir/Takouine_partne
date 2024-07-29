@@ -6,36 +6,36 @@
 <div class="container" style="width: 969px;">
   <div class="left">
     <div class="header">
-      <h2>Add Partenaire Here</h2>
+      <h2>Ajoutez un partenaire ici</h2>
     </div>
     <form action="" method="POST" class="form">
       {% csrf_token %}
       <div class="form-field">
-        <label for="id_username">Username:</label>
+        <label for="id_username">Nom d'utilisateur:</label>
         {{ form.username }}
       </div>
       <div class="form-field">
-        <label for="id_email">Email:</label>
+        <label for="id_email">E-mail:</label>
         {{ form.Companyemail }}
       </div>
       <div class="form-field">
-        <label for="id_password1">Password:</label>
+        <label for="id_password1">Mot de passe:</label>
         {{ form.password1 }}
       </div>
       <div class="form-field">
-        <label for="id_password2">Confirm Password:</label>
+        <label for="id_password2">Confirmez le mot de passe:</label>
         {{ form.password2 }}
       </div>
       <div class="form-field">
-        <label for="id_CompanyName">Company Name:</label>
+        <label for="id_CompanyName">Nom de l'entreprise:</label>
         {{ form.CompanyName }}
       </div>
       <div class="form-field">
-        <label for="id_CompanyPhone">Company Phone:</label>
+        <label for="id_CompanyPhone">Téléphone de l'entreprise:</label>
         {{ form.CompanyPhone }}
       </div>
       <div class="form-field">
-        <label for="id_category">Category</label>
+        <label for="id_category">Catégorie</label>
         <select id="id_category" name="category" class="form-select w-auto">
             {% for category_key, category_value in form.fields.category.choices %}
                 {% if category_key == form.category.value %}
@@ -47,7 +47,7 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-dark">Add Partenaire</button>
+    <button type="submit" class="btn btn-dark">Ajouter un partenaire</button>
     
     {% comment %} <button type="submit" class="btn btn-primary">Add Partenaire</button> {% endcomment %}
 

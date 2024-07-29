@@ -55,20 +55,20 @@
 </head>
 <body>
     <div class="container">
-        <h2>Edit Partenaire</h2>
+        <h2>Modifier le partenaire</h2>
         <form method="POST">
             {% csrf_token %}
             <!-- User form fields -->
             <label for="id_username">Username:</label>
             {{ user_form.username }}
             <!-- partenaire form fields -->
-            <label for="id_email">Email:</label>
+            <label for="id_email">Nom d'utilisateur:</label>
             {{ partenaire_form.Companyemail }}
-            <label for="id_CompanyName">CompanyName:</label>
+            <label for="id_CompanyName">Nom de l'entreprise:</label>
             {{ partenaire_form.CompanyName }}
-            <label for="id_CompanyPhone">CompanyPhone:</label>
+            <label for="id_CompanyPhone">Téléphone de l'entreprise:</label>
             {{ partenaire_form.CompanyPhone }}
-            <label for="id_CompanyPhone">Category:</label>
+            <label for="id_CompanyPhone">Catégorie:</label>
             {% comment %} {{ partenaire_form.category}}   {% endcomment %}
             <select class="form-select w-auto" name="category">
                 {% for category_key, category_value in partenaire_form.fields.category.choices %}
@@ -80,8 +80,8 @@
                 {% endfor %}
             </select>
             
-            <br>
-            <button type="submit">Update</button>
+            <br><br>
+            <button type="submit">Mise à jour le partenaire</button>
         </form>
         
         {% if form.errors %}

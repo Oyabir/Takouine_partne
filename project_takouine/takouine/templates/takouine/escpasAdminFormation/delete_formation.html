@@ -1,12 +1,13 @@
-
 <div class="container pb-5">
-    <h1>Delete Formation</h1>
-    <p>Are you sure you want to delete <strong>{{ formation.name }}</strong>?</p>
-    <form method="POST">
-        {% csrf_token %}
-    <a href="{% url 'escpasAdminFormation' %}">Return</a>
-    <button type="submit" >OK</button>
-    </form>
+  <h1>Supprimer la formation</h1>
+  <p>Etes-vous sûr que vous voulez supprimer <strong>{{ formation.name }}</strong>?</p>
+  <form method="POST">
+      {% csrf_token %}
+      {% if redirect_url %}
+          <a href="{% url redirect_url %}">Retour</a>
+      {% endif %}
+      <button type="submit">Oui</button>
+  </form>
 </div>
 
 

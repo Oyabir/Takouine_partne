@@ -6,57 +6,57 @@
 <div class="container" style="width: 969px;">
   <div class="left">
     <div class="header">
-      <h2>Add Stagiaire Here</h2>
+      <h2>Ajoutez Stagiaire ici</h2>
     </div>
     <form action="" method="POST" enctype="multipart/form-data" class="form">
       {% csrf_token %}
       <div class="form-field">
-        <label for="id_username">Username:</label>
+        <label for="id_username">Nom d'utilisateur:</label>
         {{ form.username }}
       </div>
       <div class="form-field">
-        <label for="id_email">Email:</label>
+        <label for="id_email">E-mail:</label>
         {{ form.email }}
       </div>
       <div class="form-field">
-        <label for="id_password1">Password:</label>
+        <label for="id_password1">Mot de passe:</label>
         {{ form.password1 }}
       </div>
       <div class="form-field">
-        <label for="id_password2">Confirm Password:</label>
+        <label for="id_password2">Confirmez le mot de passe:</label>
         {{ form.password2 }}
       </div>
       <div class="form-field">
-        <label for="id_name">Full Name:</label>
+        <label for="id_name">Nom et prénom:</label>
         {{ form.name }}
       </div>
       <div class="form-field">
-        <label for="id_phone">Phone:</label>
+        <label for="id_phone">Téléphone:</label>
         {{ form.phone }}
       </div>
       <div class="form-field">
-        <label for="id_age">Age:</label>
+        <label for="id_age">Âge:</label>
         {{ form.age }}
       </div>
       <div class="form-field">
-        <label for="id_avatar">avatar:</label>
+        <label for="id_avatar">Avatar:</label>
         {{ form.avatar }}
       </div>
       <div class="form-field">
-        <label for="formations">formations:</label>
+        <label for="formations">Formations:</label>
         {{ form.formations }}
       </div>
       <div class="form-field">
-        <label for="id_date_debut">Date début:</label>
+        <label for="id_date_debut">Date de début:</label>
         {{ form.date_debut }}
     </div>
     <div class="form-field">
-        <label for="id_date_fin">Date fin:</label>
+        <label for="id_date_fin">Date de fin:</label>
         {{ form.date_fin }}
     </div>
     
 
-      <button type="submit" class="btn btn-dark">Add Stagiaire</button>
+      <button type="submit" class="btn btn-dark">Ajouter Stagiaire</button>
       {% comment %} <div class="col-auto">						    
         <button type="submit" class="btn primary">Add Stagiaire</button>
       </div> {% endcomment %}

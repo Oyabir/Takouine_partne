@@ -52,17 +52,16 @@
 </head> 
 
 {%  include  'takouine/navbarPartenaire.html' %}
-<br>
-<br>
+
 {% block content %}
 
 <section id="intro" class="scrollspy-section py-5">
     <div class="container-lg">
         <div class="row align-items-center text-center py-5 mt-5">
             <div class="col-lg-6 mb-5">
-                <h2 class="auth-heading text-center mb-5">Log in to Takouine Smart as Partenaire</h2>
+                <h2 class="auth-heading text-center mb-5">Espace de connexion des partenaires</h2>
                 <div class="auth-form-container text-start">
-                    <form class="auth-form login-form" action="{% url 'Partenairelogin' %}" method="POST"> <!-- Updated form action -->
+                    <form class="auth-form login-form" action="{% url 'Partenairelogin' %}" method="POST"> 
                         {% csrf_token %}
                         <div class="email mb-3">
                             <label class="sr-only" for="username">Username</label>
@@ -79,7 +78,7 @@
                 </div>	
             </div>          
             <div class="col-lg-6">
-                <img src="{% static 'assets/images/logo2-removebg-preview.png' %}" alt="banner-image" class="rounded-4 img-fluid" data-aos="fade-up">
+                <img src="{% static 'assets/images/Partner - partenaire.png' %}" alt="banner-image" class="rounded-4 img-fluid" data-aos="fade-up">
             </div>
         </div>
     </div>

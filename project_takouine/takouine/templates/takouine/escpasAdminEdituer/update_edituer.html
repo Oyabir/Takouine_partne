@@ -5,22 +5,22 @@
 <br>
 <body>
     <div class="container">
-        <h2>Edit Edituer</h2>
+        <h2>Modifier l'éditeur</h2>
         <form method="POST">
             {% csrf_token %}
             <!-- User form fields -->
-            <label for="id_username">Username:</label>
+            <label for="id_username">Nom d'utilisateur:</label>
             {{ user_form.username }}
             <!-- Customer form fields -->
-            <label for="id_name">Name:</label>
+            <label for="id_name">Nom et prénom:</label>
             {{ edituer_form.name }}
-            <label for="id_email">Email:</label>
+            <label for="id_email">E-mail:</label>
             {{ edituer_form.email }}
-            <label for="id_phone">Phone:</label>
+            <label for="id_phone">Téléphone:</label>
             {{ edituer_form.phone }}
-            <label for="id_age">Age:</label>
+            <label for="id_age">Âge:</label>
             {{ edituer_form.age }}
-            <button  type="submit">Update</button>
+            <button type="submit">Mise à jour</button>
         </form>
 
         <!--  errors for user_form -->

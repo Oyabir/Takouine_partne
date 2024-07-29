@@ -66,9 +66,9 @@
 			            <div class="app-utility-item app-user-dropdown dropdown">
 				            <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img src="{{ stagiaire.avatar.url }}" alt="user profile"></a>
 				            <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                      <li><a class="dropdown-item" href="/add_More_Stagiaire/{{ stagiaire.slugStagiaire }}">Account</a></li>
+                      <li><a class="dropdown-item" href="/add_More_Stagiaire/{{ stagiaire.slugStagiaire }}">Mon compte</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                      <li><a class="dropdown-item" href="{% url 'logout' %}">Se déconnecter</a></li>
 							      </ul>
 			            </div>
 		            </div>
@@ -124,7 +124,7 @@
 								  </svg>                      <path d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z"/>
                     </svg>
 						         </span>
-		                         <span class="nav-link-text">Account</span>
+		                         <span class="nav-link-text">Mon compte</span>
 		                         
 					        </a>
 					        
@@ -145,7 +145,7 @@
                           <path fill-rule="evenodd" d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                         </svg>
 							        </span>
-			                  <span class="nav-link-text">Logout</span>
+			                  <span class="nav-link-text">Se déconnecter</span>
 						        </a>
 						    </li>
 					    </ul>

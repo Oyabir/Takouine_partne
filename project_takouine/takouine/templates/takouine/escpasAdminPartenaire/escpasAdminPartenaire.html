@@ -7,7 +7,7 @@
 		<div class="container-xl">  
 			<div class="row g-3 mb-4 align-items-center justify-content-between">
 				<div class="col-auto">
-					<h1 class="app-page-title mb-0">Partenaire</h1>
+					<h1 class="app-page-title mb-0">Partenaires</h1>
 				</div>
 				<div class="col-auto">
 					 <div class="page-utilities">
@@ -35,7 +35,7 @@
 							</div> {% endcomment %}
 							<div class="col-auto">						    
 								<a class="btn app-btn-secondary" href="{% url 'registerPartenaire' %}">
-									Add Partenaire
+									Ajouter un partenaire
 								</a>
 							</div>
 						</div>
@@ -58,11 +58,12 @@
 								<table class="table app-table-hover mb-0 text-left">
 									<thead>
 										<tr>
-											<th class="cell">Username</th>
-											<th class="cell">Email</th>
-											<th class="cell">Category</th>
-											<th class="cell">Company Name</th>
-											<th class="cell">Company Code</th>
+											<th class="cell">Nom d'utilisateur</th>
+											<th class="cell">E-mail</th>
+											<th class="cell">Catégorie</th>
+											<th class="cell">Remise</th>
+											<th class="cell">Nom de l'entreprise</th>
+											<th class="cell">Code de l'entreprise</th>
 											<th class="cell">Action</th>
 										</tr>
 									</thead>
@@ -72,11 +73,12 @@
 											<td class="cell">{{ partenaire.username }}</td>
 											<td class="cell"><span class="truncate">{{ partenaire.partenaire.Companyemail }}</span></td>
 											<td class="cell"><span class="truncate">{{ partenaire.partenaire.category }}</span></td>
+											<td class="cell"><span class="truncate">{{ partenaire.partenaire.discount }}</span></td>
 											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.CompanyName }}</span></td>
 											<td class="cell"><span class="badge bg-success">{{ partenaire.partenaire.CompanyCode }}</span></td>
 											<td class="cell">
 												<a href="{% url 'update_partenaire' partenaire.partenaire.slugPartenaire %}"><i class="fa-solid fa-pen-to-square"></i></a>
-												 <a class="text-danger" href="{% url 'delete_partenaire' partenaire.partenaire.slugPartenaire %}"><i class="fa-solid fa-trash"></i></a>
+												<a class="text-danger" href="{% url 'delete_partenaire' partenaire.partenaire.slugPartenaire %}"><i class="fa-solid fa-trash"></i></a>
 												<a href="{% url 'change_password_partenaire' partenaire.partenaire.slugPartenaire %}"><i class="fa fa-refresh" aria-hidden="true"></i></a>  
 											</td>
 										</tr>

@@ -53,8 +53,8 @@
 <body>
     <form action="{% url 'increment_achat' slugPartenaire=slugPartenaire slugStagiaire=slugStagiaire %}" method="post">
         {% csrf_token %}
-        <label for="amount">Enter amount:</label>
-        <input type="number" name="amount" id="amount" placeholder="Enter amount" required>
+        <label for="amount">Entrer le montant:</label>
+        <input type="number" name="amount" id="amount" placeholder="Entrer le montant" required>
         <button type="submit">Submit</button>
     </form>
     
