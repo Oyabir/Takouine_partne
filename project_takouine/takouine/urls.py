@@ -24,9 +24,10 @@ urlpatterns = [
     
     path('registerStagiaire/',views.registerStagiaire, name="registerStagiaire"),
     path('escpasAdminStagiaire/',views.escpasAdminStagiaire, name="escpasAdminStagiaire"),
-    path('update_stagiaire/<slug:slugStagiaire>',views.update_stagiaire, name="update_stagiaire"),
-    path('change_password_stagiaire/<slug:slugStagiaire>/', views.change_password_stagiaire, name='change_password_stagiaire'),
-    path('delete_stagiaire/<slug:slugStagiaire>/', views.delete_stagiaire, name='delete_stagiaire'),
+    
+    path('update_stagiaire/<slug:slugStagiaire>/',views.update_stagiaire, name='update_stagiaire'),
+    path('delete_stagiaire/<slug:slugStagiaire>/',views.delete_stagiaire, name='delete_stagiaire'),
+    path('change_password_stagiaire/<slug:slugStagiaire>/',views.change_password_stagiaire, name='change_password_stagiaire'),
 
     path('registerPartenaire/',views.registerPartenaire, name="registerPartenaire"),
     path('escpasAdminPartenaire/',views.escpasAdminPartenaire, name="escpasAdminPartenaire"),

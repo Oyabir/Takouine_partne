@@ -73,48 +73,44 @@ def update_formation_slug(sender, instance, created, **kwargs):
         Formation.objects.filter(pk=instance.pk).update(slugFormation=instance.slugFormation)
         
 
-    
-
-
 
 
 class Stagiaire(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, null=True)
-    email = models.CharField(max_length=100, null=True)
-    phone = models.CharField(max_length=100, null=True)
-    age = models.CharField(max_length=100, null=True)
-    avatar = models.ImageField(null=True)
-    formations = models.ManyToManyField(Formation)  # Many-to-many relationship with Formation
-    date_debut = models.DateTimeField(null=True)
-    date_fin = models.DateTimeField(null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    stagiaireCode = models.CharField(max_length=100, null=True, default=generate_stagiaire_code)
-    
-    
+    name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=100, null=True, blank=True)
+    age = models.CharField(max_length=100, null=True, blank=True)
+    avatar = models.ImageField(null=True, blank=True)
+    formations = models.ManyToManyField(Formation, blank=True)  
+    date_debut = models.DateTimeField(null=True, blank=True)
+    date_fin = models.DateTimeField(null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    stagiaireCode = models.CharField(max_length=100, null=True, blank=True, default=generate_stagiaire_code)
     slugStagiaire = models.SlugField(blank=True, null=True)
-    
+
     def save(self, *args, **kwargs):
-        if not self.slugStagiaire:
-            self.slugStagiaire = slugify(self.name)
+        if not self.slugStagiaire and self.user:
+            self.slugStagiaire = slugify(self.user.username or '')
         super(Stagiaire, self).save(*args, **kwargs)
-    
+
+
     def __str__(self):
         return self.name
-    
-    
-    
-#update_stagiaire_slug   
+
+
+
+# Update Stagiaire slug on User save
 @receiver(post_save, sender=User)
-def update_stagiaire_slug(sender, instance, created, **kwargs):
-        try:
-            stagiaire = instance.stagiaire
-            if stagiaire.slugStagiaire != slugify(instance.username):
-                stagiaire.slugStagiaire = slugify(instance.username)
-                stagiaire.save()
-        except Stagiaire.DoesNotExist:
-            pass
-        
+def update_stagiaire_slug(sender, instance, **kwargs):
+    if hasattr(instance, 'stagiaire'):
+        stagiaire = instance.stagiaire
+        new_slug = slugify(instance.username)
+        if stagiaire.slugStagiaire != new_slug:
+            stagiaire.slugStagiaire = new_slug
+            stagiaire.save(update_fields=['slugStagiaire'])
+
+
 
 
 # Function to generate a random company code

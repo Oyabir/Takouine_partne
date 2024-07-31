@@ -61,10 +61,10 @@ def register(request):
             username = form.cleaned_data.get('username')
             group = Group.objects.get(name="Edituer")
             user.groups.add(group)
-            messages.success(request, f"{username} created successfully!")
+            messages.success(request, f"{username} créé avec succès!")
             return redirect('login')
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")  
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.")
         
     context = {'form': form}
     return render(request, 'takouine/register.html', context)
@@ -78,18 +78,24 @@ def Partenairelogin(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
+            # Check if the user is in the 'stagiaire' group
+            if user.groups.filter(name='stagiaire').exists():
+                messages.error(request, 'L\'email ou le mot de passe est incorrect. Veuillez réessayer.')
+                return redirect('/EscapePartenaireLogin') 
+            
+            # Log the user in if not in 'stagiaire' group
             login(request, user)
+            
             if request.user.groups.filter(name='partenaire').exists():
                 return redirect('/escpasPartenaire')
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituer')
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdmin')
-            if request.user.groups.filter(name='stagiaire').exists():
-                return redirect('/escpasStagiairer')
         else:
-            messages.error(request, 'Invalid email or password.')
+            messages.error(request, 'L\'email ou le mot de passe est incorrect. Veuillez réessayer.')
     return render(request,"takouine/PartenaireLoginHome/EscapePartenaireLogin.html")
  
  
@@ -104,23 +110,30 @@ def Stagiairelogin(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        if user is not None :
-            login(request,user)
-            if request.user.groups.filter(name='partenaire').exists():
-                return redirect('/escpasPartenaire')
-            elif request.user.groups.filter(name='Edituer').exists():
+        
+        if user is not None:
+            # Check if the user is in the 'partenaire' group
+            if user.groups.filter(name='partenaire').exists():
+                messages.error(request, 'L\'email ou le mot de passe est incorrect. Veuillez réessayer.')
+                return redirect('/EscapeStagiaireLogin')  
+                
+            # Log the user in if not in 'partenaire' group
+            login(request, user)
+            
+            if user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituer')
-            if request.user.groups.filter(name='admin').exists():
+            elif user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdmin')
-            if request.user.groups.filter(name='stagiaire').exists():
+            elif user.groups.filter(name='stagiaire').exists():
                 return redirect('/escpasStagiairer')
         else:
-            messages.info(request,'email or password is 0')
+            messages.error(request, 'L\'email ou le mot de passe est incorrect. Veuillez réessayer.')
 
     context = {}
-    return render(request,"takouine/StagiaireLoginHome/EscapeStagiaireLogin.html", context)
- 
- 
+    return render(request, "takouine/StagiaireLoginHome/EscapeStagiaireLogin.html", context)
+
+
+
  
  
  
@@ -197,11 +210,11 @@ def registerEdituer(request):
             group = Group.objects.get(name="Edituer")
             user.groups.add(group)
 
-            messages.success(request, f"{user.username} created successfully!")
+            messages.success(request, f"{user.username} créé avec succès!")
             
             return redirect('/escpasAdmin')
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")  
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.")
         
     context = {'form': form}
     return render(request, 'takouine/escpasAdminEdituer/registerEdituer.html', context)
@@ -222,10 +235,10 @@ def update_edituer(request, slugEdituer):
         if user_form.is_valid() and edituer_form.is_valid():
             user_form.save()
             edituer_form.save()
-            messages.success(request, "User and customer updated successfully!")
+            messages.success(request, "L'éditeur ont été mis à jour avec succès !")
             return redirect('/escpasAdmin')
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.")
     else:
         user_form = UserUpdateForm(instance=user)
         edituer_form = EdituerFormUpdate(instance=edituer)
@@ -246,10 +259,10 @@ def change_password(request, slugEdituer):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, "Mot de passe mis à jour avec succès pour l'éditeur !")
             return redirect('/escpasAdmin')  
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, "Veuillez corriger l'erreur ci-dessous.")
     else:
         form = PasswordChangeForm(user)
     
@@ -269,8 +282,9 @@ def delete_edituer(request, slugEdituer):
     if request.method == 'POST':
         edituer.user.delete()  
         edituer.delete()  
+        messages.success(request, "l'éditeur été supprimé avec succès !")
         return redirect('/escpasAdmin')  
-
+ 
     return render(request, 'takouine/escpasAdminEdituer/delete_edituer.html', {'edituer': edituer})
 
 
@@ -305,10 +319,10 @@ def add_formationAdmin(request):
         form = FormationForm(request.POST, request.FILES)  
         if form.is_valid():
             form.save()  # Save the form data to the database
-            messages.success(request, 'Formation added successfully!')
-            return redirect('escpasAdminFormation')  # Redirect to a list view
+            messages.success(request, "La formation a été ajoutée avec succès !")
+            return redirect('escpasAdminFormation')  
         else:
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(request, "Veuillez corriger l'erreur ci-dessous.")
     else:
         form = FormationForm()  
     return render(request, 'takouine/escpasAdminFormation/add_formation.html', {'form': form})
@@ -324,10 +338,10 @@ def add_formationEdituer(request):
         form = FormationForm(request.POST, request.FILES)  #i can delated request.FILES
         if form.is_valid():
             form.save()  # Save the form data to the database
-            messages.success(request, 'Formation added successfully!')
-            return redirect('escpasEdituerFormation')  # Redirect to a list view
+            messages.success(request, "La formation a été ajoutée avec succès !")
+            return redirect('escpasEdituerFormation')  
         else:
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(request, "Veuillez corriger l'erreur ci-dessous.")
     else:
         form = FormationForm()  
 
@@ -343,7 +357,7 @@ def delete_formation(request, slugFormation):
     formation = get_object_or_404(Formation, slugFormation=slugFormation)
     if request.method == 'POST':
         formation.delete()
-        messages.success(request, 'Formation deleted successfully!')
+        messages.success(request, "La formation a été supprimée avec succès !")
         # Check if the user is an admin or an editor and set the redirect URL
         if request.user.groups.filter(name='admin').exists():
             redirect_url = 'escpasAdminFormation'
@@ -374,7 +388,7 @@ def update_formation(request, slugFormation):
         form = FormationForm(request.POST, instance=formation)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Formation Updated successfully!')
+            messages.success(request, "La formation a été mise à jour avec succès !")
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminFormation')
             elif request.user.groups.filter(name='Edituer').exists():
@@ -480,14 +494,14 @@ def registerStagiaire(request):
             group = Group.objects.get(name="stagiaire")
             user.groups.add(group)
 
-            messages.success(request, f"{user.username} created successfully!")
+            messages.success(request, f" Stagiaire {user.username} a été créé avec succès !")
 
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminStagiaire')
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituer')
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")  
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.") 
 
     context = {'form': form}
     return render(request, 'takouine/escpasAdminStagiaire/registerStagiaire.html', context)
@@ -507,13 +521,13 @@ def update_stagiaire(request, slugStagiaire):
         if user_form.is_valid() and stagiaire_form.is_valid():
             user_form.save()
             stagiaire_form.save()
-            messages.success(request, "User and customer updated successfully!")
+            messages.success(request, "Le stagiaire a été mis à jour avec succès !")
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminStagiaire') 
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituer') 
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.")
     else:
         user_form = UserUpdateForm(instance=user)
         stagiaire_form = StagiaireFormUpdate(instance=stagiaire)
@@ -529,11 +543,12 @@ def delete_stagiaire(request, slugStagiaire):
     try:
         stagiaire = get_object_or_404(Stagiaire, slugStagiaire=slugStagiaire)
     except Stagiaire.DoesNotExist:
-        return HttpResponse("stagiaire does not exist.", status=404)
+        return HttpResponse("Le stagiaire n'existe pas.", status=404)
 
     if request.method == 'POST':
         stagiaire.user.delete()
         stagiaire.delete()
+        messages.success(request, "l'stagiaire été supprimé avec succès !")
         
         # Check user group and redirect
         if request.user.groups.filter(name='admin').exists():
@@ -569,14 +584,14 @@ def change_password_stagiaire(request, slugStagiaire):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password was successfully updated!')
-             # Check if the user is an admin or an editor
+            messages.success(request, "Le mot de passe du stagiaire a été mis à jour avec succès !")
+            # Check if the user is an admin or an editor
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminStagiaire')
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituer')  
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, "Veuillez corriger l'erreur ci-dessous.")
     else:
         form = PasswordChangeForm(user)
     
@@ -587,19 +602,28 @@ def change_password_stagiaire(request, slugStagiaire):
 
 #escpasAdminStagiaire
 @login_required(login_url='login')
-@allowedUsers(allowedGroups=['admin'])   
+@allowedUsers(allowedGroups=['admin'])
 def escpasAdminStagiaire(request):
     edituers = User.objects.filter(groups__name='Edituer')
-    stagiaires = User.objects.filter(groups__name='stagiaire')
+    stagiaires = Stagiaire.objects.filter(user__in=User.objects.filter(groups__name='stagiaire'))
     partenaires = User.objects.filter(groups__name='partenaire')
     
     total_edituers = User.objects.filter(groups__name='Edituer').count()
     total_admins = User.objects.filter(groups__name='admin').count()
-    total_stagiaires = User.objects.filter(groups__name='stagiaire').count()
+    total_stagiaires = stagiaires.count()  # Total count from Stagiaire model
     total_partenaires = User.objects.filter(groups__name='partenaire').count()
     
-    context = {'edituers': edituers,'stagiaires': stagiaires ,'total_edituers': total_edituers,'total_admins': total_admins,'total_stagiaires': total_stagiaires,'partenaires': partenaires,'total_partenaires':total_partenaires} 
+    context = {
+        'edituers': edituers,
+        'stagiaires': stagiaires,
+        'total_edituers': total_edituers,
+        'total_admins': total_admins,
+        'total_stagiaires': total_stagiaires,
+        'partenaires': partenaires,
+        'total_partenaires': total_partenaires
+    }
     return render(request, "takouine/escpasAdminStagiaire/escpasAdminStagiaire.html", context)
+
 
 
 
@@ -629,14 +653,14 @@ def registerPartenaire(request):
             group = Group.objects.get(name="partenaire")
             user.groups.add(group)
 
-            messages.success(request, f"{user.email} created successfully!")
+            messages.success(request, f"Partenaire {user.email} a été créé avec succès !")
             # Check if the user is an admin or an editor
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminPartenaire')  # Redirect to admin stagiaire page
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituerPartenaire')  # Redirect to edituer page
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")  
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.") 
         
     context = {'form': form}
     return render(request, 'takouine/escpasAdminPartenaire/registerPartenaire.html', context)
@@ -657,14 +681,14 @@ def update_partenaire(request, slugPartenaire):
         if user_form.is_valid() and partenaire_form.is_valid():
             user_form.save()
             partenaire_form.save()
-            messages.success(request, "User and partenaire updated successfully!")
+            messages.success(request, "Le partenaire a été mis à jour avec succès !")
             # Check if the user is an admin or an editor
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminPartenaire')
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituerPartenaire') 
         else:
-            messages.error(request, "Invalid form submission. Please correct the errors below.")
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.")
     else:
         user_form = UserUpdateForm(instance=user)
         previous_category_value = partenaire.category
@@ -684,11 +708,12 @@ def delete_partenaire(request, slugPartenaire):
     try:
         partenaire = get_object_or_404(Partenaire, slugPartenaire=slugPartenaire)
     except Partenaire.DoesNotExist:
-        return HttpResponse("Partenaire does not exist.", status=404)
+        return HttpResponse("Le partenaire n'existe pas.", status=404)
 
     if request.method == 'POST':
         partenaire.user.delete()
         partenaire.delete()
+        messages.success(request, "l'partenaire été supprimé avec succès !")
         
         # Check user group and redirect
         if request.user.groups.filter(name='admin').exists():
@@ -723,14 +748,14 @@ def change_password_partenaire(request, slugPartenaire):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, "Le mot de passe du partenaire a été mis à jour avec succès !")
             # Check if the user is an admin or an editor
             if request.user.groups.filter(name='admin').exists():
                 return redirect('/escpasAdminPartenaire')  # Adjusted to correct URL
             elif request.user.groups.filter(name='Edituer').exists():
                 return redirect('/escpasEdituerPartenaire')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, "La soumission du formulaire est invalide. Merci de corriger les erreurs ci-dessous.") 
     else:
         form = PasswordChangeForm(user)
     
@@ -770,7 +795,7 @@ def escpasAdminPartenaire(request):
 @allowedUsers(allowedGroups=['admin', 'Edituer']) 
 def escpasEdituer(request):
     edituers = User.objects.filter(groups__name='Edituer')
-    stagiaires = User.objects.filter(groups__name='stagiaire')
+    stagiaires = Stagiaire.objects.filter(user__in=User.objects.filter(groups__name='stagiaire'))
     partenaires = User.objects.filter(groups__name='partenaire')
     
     total_edituers = User.objects.filter(groups__name='Edituer').count()
@@ -1174,7 +1199,7 @@ def search_stagiaire(request):
         'total_visite_month': total_visite_month,
         })
         except Stagiaire.DoesNotExist:
-            error = 'Stagiaire not found'
+            error = 'Le stagiaire n\'existe pas'
             return render(request, 'takouine/escpasPartenaire/escpasPartenaireStagiaire.html', {'error': error,'partenaire': partenaire, 
         'total_achat': total_achat,
         'total_achat_today': total_achat_today,
@@ -1230,12 +1255,12 @@ def increment_achat(request, slugPartenaire, slugStagiaire):
             if hasattr(partenaire, 'Achat'):
                 partenaire.Achat += int(amount)
                 partenaire.save()
-                messages.success(request, f"Achat of {amount} added successfully.")
+                messages.success(request, f"L'achat de {amount} a été ajouté avec succès par le stagiaire {stagiaire.name}.")
                 # Create an Achat object with both Partenaire and Stagiaire
                 Achat.objects.create(partenaire=partenaire, stagiaire=stagiaire, amount=amount)
                 return redirect('escpasPartenaireStagiaire')
             else:
-                messages.error(request, "Achat attribute doesn't exist in the Partenaire model.")
+                messages.error(request, "L'attribut 'Achat' n'existe pas dans le modèle Partenaire.")
         except Partenaire.DoesNotExist:
             pass
         except Stagiaire.DoesNotExist:
@@ -1278,10 +1303,10 @@ def increment_visite(request, slugPartenaire, slugStagiaire):
         stagiaire = Stagiaire.objects.get(slugStagiaire=slugStagiaire)
         # Create a new visit entry with the partenaire and stagiaire
         Visite.objects.create(partenaire=partenaire, stagiaire=stagiaire)
-        messages.success(request, f"Visit added successfully for {partenaire.CompanyName}")
+        messages.success(request, f"La visite a été ajoutée avec succès par {stagiaire.name}")
         return redirect(reverse('escpasPartenaireStagiaire') + f'?partenaire_id={slugPartenaire}')
     except (Partenaire.DoesNotExist, Stagiaire.DoesNotExist):
-        messages.error(request, "Partenaire or Stagiaire does not exist.")
+        messages.error(request, "Partenaire ou Stagiaire n'existe pas.")
         return redirect('/')  # Redirect to a different page or handle the error as needed
 
 
@@ -1335,7 +1360,7 @@ def rapportsPartenaire(request):
 
 def generate_pdf(request):
     # Extract data from the database
-    context = {'achats_all': Achat.objects.all()}
+    context = {'achats_all': Achat.objects.all().order_by('-date_added')}
     
     # Render the HTML template to a string
     html = render_to_string('takouine/escpasPartenaire/pdf_template.html', context)
@@ -1351,11 +1376,11 @@ def generate_pdf(request):
     
     # Start with the header
     elements = []
-    elements.append(Paragraph('ALL Achat Operations', header_style))
+    elements.append(Paragraph("Toutes les opérations d'achat", header_style))
     
     # Create table data
     table_data = []
-    table_data.append(['Partenaire', 'Stagiaire', 'Amount', 'Date Added'])
+    table_data.append(['Partenaire', 'Stagiaire', 'Montant', 'date ajoutée'])
     
     for achat in context['achats_all']:
         table_data.append([
@@ -1412,11 +1437,11 @@ def generate_visite_pdf(request):
     
     # Start with the header
     elements = []
-    elements.append(Paragraph('ALL Visite Operations', header_style))
+    elements.append(Paragraph('Toutes les opérations de visite', header_style))
     
     # Create table data
     table_data = []
-    table_data.append(['Partenaire', 'Stagiaire', 'Date Visited'])
+    table_data.append(['Partenaire', 'Stagiaire', 'Date de la visite'])
     
     for visite in context['visite_all']:
         table_data.append([
@@ -1607,7 +1632,7 @@ def add_More_partenaire(request, slugPartenaire):
         form = PartenaireMoreForm(request.POST, request.FILES, instance=partenaire)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Informations Updated successfully!')
+            messages.success(request, 'Informations mises à jour avec succès !')
             # Redirect to the partenaire's detail page after updating the partenaire
             return redirect(reverse('add_More_partenaire', kwargs={'slugPartenaire': slugPartenaire}))
     else:
@@ -1728,7 +1753,7 @@ def add_More_Stagiaire(request, slugStagiaire):
         form_stagiaire = StagiaireMoreForm(request.POST, request.FILES, instance=stagiaire)
         if form_stagiaire.is_valid():
             form_stagiaire.save()
-            messages.success(request, 'Informations Updated successfully!')
+            messages.success(request, 'Informations mises à jour avec succès !')
             return redirect(reverse('add_More_Stagiaire', kwargs={'slugStagiaire': stagiaire.slugStagiaire}))
     else:
         form_stagiaire = StagiaireMoreForm(instance=stagiaire)
@@ -1748,7 +1773,7 @@ def douvientpartenaire(request):
         form = ContactFormPartenaire(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your message has been sent successfully!')  # Add success message
+            messages.success(request, 'Votre message a été envoyé avec succès !')  # Add success message
 
             return redirect('/')  # Redirect to a success page
     else:

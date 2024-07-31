@@ -62,21 +62,21 @@
 									<tbody>
 										{% for stagiaire in stagiaires %}
 										<tr>
-											<td class="cell">{{ stagiaire.username }}</td>
+											<td class="cell">{{ stagiaire.user.username }}</td>
 											<td class="cell"><span class="truncate">{{ stagiaire.email }}</span></td>
 											<td class="cell"><span class="note">
-												{% for formation in stagiaire.stagiaire.formations.all %}
+												{% for formation in stagiaire.formations.all %}
 													{{ formation.name }}
 													{% if not forloop.last %}, {% endif %}
 												{% endfor %}
 											</span></td>
-											<td class="cell"><span class="badge bg-success">{{ stagiaire.stagiaire.date_debut }}</span></td>
-											<td class="cell"><span class="badge bg-success">{{ stagiaire.stagiaire.date_fin }}</span></td>
-											<td class="cell"><span class="badge bg-success">{{ stagiaire.stagiaire.stagiaireCode }}</span></td>
+											<td class="cell"><span class="badge bg-success">{{ stagiaire.date_debut }}</span></td>
+											<td class="cell"><span class="badge bg-success">{{ stagiaire.date_fin }}</span></td>
+											<td class="cell"><span class="badge bg-success">{{ stagiaire.stagiaireCode }}</span></td>
 											<td class="cell">
-												{% if stagiaire.stagiaire.avatar %}
+												{% if stagiaire.avatar %}
 													<span class="badge bg-success">
-														<img src="{{ stagiaire.stagiaire.avatar.url }}" style="width: 48px; height: 48px;" alt="Avatar">
+														<img src="{{ stagiaire.avatar.url }}" style="width: 48px; height: 48px;" alt="Avatar">
 													</span>
 												{% else %}
 													<span class="badge bg-secondary">No Avatar</span>
@@ -84,9 +84,9 @@
 											</td>
 											
 											<td class="cell">
-												<a href="{% url 'update_stagiaire' stagiaire.stagiaire.slugStagiaire %}"><i class="fa-solid fa-pen-to-square"></i></a>
-												<a class="text-danger" href="{% url 'delete_stagiaire' stagiaire.stagiaire.slugStagiaire %}"><i class="fa-solid fa-trash"></i></a>
-												<a href="{% url 'change_password_stagiaire' stagiaire.stagiaire.slugStagiaire %}"><i class="fa fa-refresh" aria-hidden="true"></i></a> 
+												<a href="{% url 'update_stagiaire' stagiaire.slugStagiaire %}"><i class="fa-solid fa-pen-to-square"></i></a>
+												<a class="text-danger" href="{% url 'delete_stagiaire' stagiaire.slugStagiaire %}"><i class="fa-solid fa-trash"></i></a>
+												<a href="{% url 'change_password_stagiaire' stagiaire.slugStagiaire %}"><i class="fa fa-refresh" aria-hidden="true"></i></a> 
 											</td>
 										</tr>
 										{% endfor %}
