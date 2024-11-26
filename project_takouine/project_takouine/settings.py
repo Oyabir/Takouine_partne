@@ -26,13 +26,15 @@ SECRET_KEY = 'django-insecure-43_9=eyy2(gf8%8=z$o9ykavxq1dsvz-priqx9y@j8c)cw6%%m
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = True
+# DEBUG = True
+# ALLOWED_HOSTS = []
 
-# DEBUG = False
 
-# ALLOWED_HOSTS = ["*"]
 
-ALLOWED_HOSTS = []
+DEBUG = False
+
+ALLOWED_HOSTS = ['partner.takouine.com']
+
 
 
 
@@ -166,7 +168,7 @@ STATICFILES_DIRS =[
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'statxic/img')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
